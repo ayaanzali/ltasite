@@ -74,7 +74,7 @@ export async function POST(request: Request) {
         inputs: [message],
         parameters: { inputType: "passage", truncate: "END" },
       });
-      const queryVector = embedResult.data?.[0]?.values;
+      const queryVector = (embedResult.data?.[0] as any)?.values;
       if (queryVector) {
         const index = pc.index<{ text?: string }>({ host: indexHost });
         const queryResponse = await index.query({
