@@ -1,13 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function VerifyMembershipPage() {
-  const { userId } = useAuth();
+  const { userId, isLoaded } = useAuth();
   const router = useRouter();
+
+  useEffect(() => {
+    if (isLoaded && !userId) router.replace("/sign-in");
+  }, [isLoaded, userId, router]);
   const [utdEmail, setUtdEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "error" | "success">("idle");
   const [errorMessage, setErrorMessage] = useState("");
@@ -40,13 +44,7 @@ export default function VerifyMembershipPage() {
     }
   };
 
-  if (!userId) {
-    return (
-      <main className="min-h-screen bg-[#F4F1EC] flex items-center justify-center px-6">
-        <p className="text-gray-600">Sign in to verify your membership.</p>
-      </main>
-    );
-  }
+  if (!userId) return null;
 
   return (
     <main className="min-h-screen bg-[#F4F1EC] flex flex-col items-center justify-center px-6 py-12">

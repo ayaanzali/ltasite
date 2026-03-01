@@ -5,7 +5,7 @@ import { MembersContent } from "./MembersContent";
 
 export default async function MembersPage() {
   const { userId } = await auth();
-  if (!userId) redirect("/");
+  if (!userId) redirect("/sign-in");
 
   const member = await getMemberByClerkUserId(userId);
   if (!member || !member.approved) redirect("/verify-membership");

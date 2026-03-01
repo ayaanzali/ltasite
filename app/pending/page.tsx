@@ -1,7 +1,11 @@
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function PendingPage() {
+export default async function PendingPage() {
+  const { userId } = await auth();
+  if (!userId) redirect("/sign-in");
   return (
     <main className="min-h-screen bg-[#1D2A3F] flex flex-col items-center justify-center px-6 py-12">
       <Image
