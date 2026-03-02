@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { SectionReveal } from "./SectionReveal";
 import { AmbassadorSection } from "./AmbassadorSection";
 
-// Bottom grid: /public/bottom-section-photos/ — top row 1.PNG, 2.PNG; bottom row 4, 5, 6.
 const BOTTOM_ROW_PHOTOS = [
-  "/bottom-section-photos/4.PNG",
-  "/bottom-section-photos/5.PNG",
-  "/bottom-section-photos/6.PNG",
+  { src: "/bottom-section-photos/4.PNG", objectPosition: "center center" },
+  { src: "/bottom-section-photos/5.PNG", objectPosition: "center center" },
+  { src: "/bottom-section-photos/6.PNG", objectPosition: "35% 25%" },
 ];
 
 export function GetInvolved() {
@@ -33,36 +33,43 @@ export function GetInvolved() {
 
       <AmbassadorSection />
 
-      {/* Top row: 1.PNG and 2.PNG — inline styles for forced alignment */}
-      <div className="grid grid-cols-2 gap-0 w-full h-[500px]">
-        <div className="overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
-          <img
+      {/* Top row: Next.js Image for fast mobile loading */}
+      <div className="grid grid-cols-2 gap-0 w-full h-[220px] sm:h-[320px] md:h-[420px] lg:h-[500px]">
+        <div className="relative overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
+          <Image
             src="/bottom-section-photos/1.PNG"
             alt=""
-            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 5% !important" }}
+            fill
+            sizes="50vw"
+            loading="lazy"
+            className="object-cover"
+            style={{ objectPosition: "center 5%" }}
           />
         </div>
-        <div className="overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
-          <img
+        <div className="relative overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
+          <Image
             src="/bottom-section-photos/2.PNG"
             alt=""
-            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "80% 5% !important" }}
+            fill
+            sizes="50vw"
+            loading="lazy"
+            className="object-cover"
+            style={{ objectPosition: "80% 5%" }}
           />
         </div>
       </div>
-      {/* Bottom row: unchanged */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0", width: "100%" }}>
-        {BOTTOM_ROW_PHOTOS.map((src) => (
-          <div key={src} style={{ aspectRatio: "3/4", overflow: "hidden" }} className="grayscale hover:grayscale-0 transition-all duration-500">
-            <img
+      {/* Bottom row: Next.js Image for fast mobile loading */}
+      <div className="grid grid-cols-3 gap-0 w-full">
+        {BOTTOM_ROW_PHOTOS.map(({ src, objectPosition }) => (
+          <div key={src} className="relative aspect-[3/4] overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
+            <Image
               src={src}
               alt=""
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                ...(src === "/bottom-section-photos/6.PNG" ? { objectPosition: "35% 25%", objectFit: "cover" } : {}),
-              }}
+              fill
+              sizes="(max-width: 768px) 33vw, 33vw"
+              loading="lazy"
+              className="object-cover"
+              style={{ objectPosition }}
             />
           </div>
         ))}

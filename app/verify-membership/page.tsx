@@ -35,7 +35,7 @@ export default function VerifyMembershipPage() {
       setStatus("error");
       setErrorMessage(
         data?.error === "No approved membership found for that email"
-          ? "No approved membership found. Make sure you used your UTD email from the join form, or contact ltautd@gmail.com"
+          ? "No approved membership found. Make sure you used your UTD email from the join form, or contact lta.utd@gmail.com"
           : data?.error ?? "Something went wrong. Please try again."
       );
     } catch {

@@ -11,14 +11,14 @@ application and you receive a welcome email with member portal login instruction
 Members get access to all exclusive events, mock trial competitions, and the member portal.
 
 The member portal lets members view their profile and connect with other LTA members. 
-Login is via Google or LinkedIn or password. Issues: email ltautd@gmail.com.
+Login is via Google or LinkedIn or password. Issues: email lta.utd@gmail.com.
 
 Ambassador program: Ambassadors are active members who help plan and run LTA events. 
 They work directly with officers, are rated on performance, and top ambassadors are 
 considered for officer positions. To apply, use the ambassador application form at 
 ltautd.com/ambassadors. Must be an active paid member first. Executive Director reviews 
 and approves ambassador applications. Teams: Events, Marketing, Outreach, Media, 
-Fundraising. Email ltautd@gmail.com with questions.
+Fundraising. Email lta.utd@gmail.com with questions.
 
 Past events: In Spring 2025 LTA hosted its premiere Lawyer Panel with 5 DFW attorneys 
 and law firm founders plus Professor Betanzos from UTD. In December 2025 LTA hosted the 
@@ -38,7 +38,7 @@ Aafiya Vahora (Marketing Co-Director), Aaryan Merchant (Media Co-Director), Vara
 Kulkarni (Media Co-Director), Neha Kandi (Events), Mohamad Alsafi (Fundraising), 
 Khadijah Khalid (Outreach), Aaradhya Arkatkar (Growth).
 
-Contact: ltautd@gmail.com. Website: ltautd.com.
+Contact: lta.utd@gmail.com. Website: ltautd.com.
 
 To compete in mock trial: must be active member with dues paid. No prior experience 
 required. Sign up when competition is announced via email.

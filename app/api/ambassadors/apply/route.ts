@@ -114,7 +114,7 @@ export async function POST(request: Request) {
         html: `
           <p>Hi ${firstName},</p>
           <p>We've received your LTA Ambassador application. We'll review it within 1–2 weeks and reach out to schedule an interview if you're a fit.</p>
-          <p>Questions? Email ltautd@gmail.com</p>
+          <p>Questions? Email lta.utd@gmail.com</p>
           <p>— LTA UTD</p>
         `,
       });

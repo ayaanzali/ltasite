@@ -19,10 +19,10 @@ export default async function PendingPage() {
         Your membership is pending approval. Once your dues are confirmed you
         will receive access. Questions? Email{" "}
         <a
-          href="mailto:ltautd@gmail.com"
+          href="mailto:lta.utd@gmail.com"
           className="text-white underline hover:no-underline"
         >
-          ltautd@gmail.com
+          lta.utd@gmail.com
         </a>
       </p>
       <Link

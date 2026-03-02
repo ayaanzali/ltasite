@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { SectionReveal } from "./SectionReveal";
 
 const stats = [
@@ -38,11 +39,14 @@ function WinnerCard({
           boxShadow: "0 0 0 1px rgba(255,255,255,0.15), 0 0 0 3px rgba(45,91,227,0.4), 0 25px 50px -12px rgba(0,0,0,0.5)",
         }}
       >
-        <div className="absolute inset-2 sm:inset-3 rounded-md overflow-hidden ring-1 ring-white/20">
-          <img
+        <div className="absolute inset-2 sm:inset-3 rounded-md overflow-hidden ring-1 ring-white/20 relative">
+          <Image
             src={image}
             alt={name}
-            className="w-full h-full min-h-[200px] object-cover object-center"
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            loading="lazy"
+            className="object-cover object-center"
           />
         </div>
       </div>

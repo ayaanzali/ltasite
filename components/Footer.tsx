@@ -84,10 +84,10 @@ export function Footer() {
                 </a>
               ))}
               <a
-                href="mailto:ltautd@gmail.com"
+                href="mailto:lta.utd@gmail.com"
                 className="text-[#1D2A3F] hover:text-[#2D5BE3] font-medium text-sm transition-colors w-fit"
               >
-                ltautd@gmail.com
+                lta.utd@gmail.com
               </a>
               <button
                 type="button"

@@ -16,13 +16,13 @@ const execBoard: Officer[] = [
   {
     name: "Ayaan Ali",
     title: "President",
-    imageUrl: "https://ltautd.com/images/Ayaan.JPG",
+    imageUrl: "/images/Ayaan.JPG",
     linkedInUrl: "https://www.linkedin.com/in/ayaanzali/",
   },
   {
     name: "Ram Sundararaman",
     title: "Vice President",
-    imageUrl: "https://ltautd.com/images/Ram.JPG",
+    imageUrl: "/images/Ram.JPG",
     linkedInUrl: "https://www.linkedin.com/in/sriramsundararaman",
   },
   {
@@ -33,7 +33,7 @@ const execBoard: Officer[] = [
   {
     name: "Tanisha Dossa",
     title: "Secretary",
-    imageUrl: "https://ltautd.com/images/Tanisha.JPG",
+    imageUrl: "/images/Tanisha.JPG",
     linkedInUrl: "https://www.linkedin.com/in/tanisha-dossa-87a80127a/",
   },
   {
@@ -47,21 +47,21 @@ const directors: Officer[] = [
   {
     name: "Aishah Abdullah",
     title: "Programming Director",
-    imageUrl: "https://ltautd.com/images/Aishah.png",
+    imageUrl: "/images/Aishah.png",
     linkedInUrl: "https://www.linkedin.com/in/aishahabdulla/",
     isDirector: true,
   },
   {
     name: "Nethra Kartheeswaran",
     title: "Marketing Co-Director",
-    imageUrl: "https://ltautd.com/images/Nethra.JPG",
+    imageUrl: "/images/Nethra.JPG",
     linkedInUrl: "https://www.linkedin.com/in/nethrapk/",
     isDirector: true,
   },
   {
     name: "Aafiya Vahora",
     title: "Marketing Co-Director",
-    imageUrl: "https://ltautd.com/images/Aafiya.JPG",
+    imageUrl: "/images/Aafiya.JPG",
     linkedInUrl: "https://www.linkedin.com/in/aafiyavahora/",
     isDirector: true,
   },
@@ -127,6 +127,8 @@ function OfficerCard({
       }
     : {};
   const { first, last } = splitName(officer.name);
+  const fallbackInitials =
+    officer.initials ?? officer.name.split(/\s+/).map((n) => n[0]).join("").slice(0, 2);
 
   return (
     <SectionReveal delay={delay}>
@@ -135,19 +137,26 @@ function OfficerCard({
         whileHover={{ y: -4 }}
         className="block group rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm hover:border-blue-600/30 transition-colors duration-200"
       >
-        <div className="aspect-square bg-[#1D2A3F] flex items-center justify-center overflow-hidden">
+        <div className="aspect-square bg-[#1D2A3F] flex items-center justify-center overflow-hidden relative">
           {officer.imageUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={officer.imageUrl}
               alt={officer.name}
               className="w-full h-full object-cover object-center"
+              onError={(e) => {
+                e.currentTarget.style.display = "none";
+                const fallback = e.currentTarget.nextElementSibling;
+                if (fallback) (fallback as HTMLElement).style.display = "flex";
+              }}
             />
-          ) : (
-            <span className="text-white font-semibold text-2xl">
-              {officer.initials}
-            </span>
-          )}
+          ) : null}
+          <span
+            className="text-white font-semibold text-2xl absolute inset-0 flex items-center justify-center"
+            style={{ display: officer.imageUrl ? "none" : "flex" }}
+          >
+            {fallbackInitials}
+          </span>
         </div>
         <div className="p-5 min-h-[7.5rem] flex flex-col">
           <h3 className="font-sans text-lg font-semibold text-navy group-hover:text-blue-600 transition-colors leading-tight">
@@ -182,7 +191,7 @@ export function Officers() {
         </SectionReveal>
 
         <p className="text-sm font-medium text-gray-500 mb-6">Executive Board</p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 mb-16">
+        <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6 lg:gap-8 mb-16">
           {execBoard.map((officer, i) => (
             <OfficerCard key={officer.name} officer={officer} delay={i * 0.05} />
           ))}
@@ -190,12 +199,12 @@ export function Officers() {
 
         <p className="text-sm font-medium text-gray-500 mb-6">Directors</p>
         <div className="flex flex-col gap-8">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+          <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6 lg:gap-8">
             {directors.slice(0, 5).map((officer, i) => (
               <OfficerCard key={officer.name} officer={officer} delay={i * 0.04} />
             ))}
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:flex xl:flex-wrap xl:justify-center xl:gap-8 [&>*]:xl:w-[calc((100%-8rem)/5)]">
+          <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 xl:flex xl:flex-wrap xl:justify-center xl:gap-8 [&>*]:xl:w-[calc((100%-8rem)/5)] gap-4 sm:gap-6 lg:gap-8">
             {directors.slice(5, 9).map((officer, i) => (
               <OfficerCard key={officer.name} officer={officer} delay={(5 + i) * 0.04} />
             ))}

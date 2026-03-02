@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
 const headline = "Where Future Advocates Build Their Case.";
@@ -63,8 +64,8 @@ function HeroSlider({ images }: { images: string[] }) {
       onMouseLeave={() => setIsPaused(false)}
       suppressHydrationWarning
     >
-      {/* Image wrapper: overflow hidden, arrows inside */}
-      <div className="relative w-full max-w-[600px] h-[420px] overflow-hidden">
+      {/* Image wrapper: overflow hidden, arrows inside — responsive height for mobile */}
+      <div className="relative w-full max-w-[600px] h-[240px] sm:h-[300px] md:h-[380px] lg:h-[420px] overflow-hidden rounded-lg">
         <AnimatePresence initial={false} custom={direction} mode="wait">
           {images.length > 0 && (
             <motion.div
@@ -77,10 +78,14 @@ function HeroSlider({ images }: { images: string[] }) {
               transition={{ type: "tween", duration: 0.35 }}
               className="absolute inset-0"
             >
-              <img
+              <Image
                 src={images[index]}
                 alt={`Photo ${index + 1}`}
-                className="absolute inset-0 w-full h-full object-cover object-center"
+                fill
+                sizes="(max-width: 768px) 100vw, 600px"
+                loading={index === 0 ? "eager" : "lazy"}
+                priority={index === 0}
+                className="object-cover object-center"
               />
             </motion.div>
           )}
@@ -136,8 +141,8 @@ function HeroSlider({ images }: { images: string[] }) {
 export function Hero() {
   return (
     <section
-      className="relative w-full min-h-screen flex flex-col md:flex-row items-center justify-center md:items-center md:justify-center bg-[#1D2A3F]"
-      style={{ padding: "60px 48px 60px 48px" }}
+      className="relative w-full min-h-screen flex flex-col md:flex-row items-center justify-center md:items-center md:justify-center bg-[#1D2A3F] gap-8 md:gap-12"
+      style={{ padding: "clamp(48px, 8vw, 60px) clamp(24px, 5vw, 48px)" }}
       suppressHydrationWarning
     >
       {/* Left column: text — 45% width */}
@@ -205,8 +210,8 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Right column: carousel — 55% width */}
-      <div className="relative z-10 flex flex-col items-center w-full md:w-[55%] shrink-0">
+      {/* Right column: carousel — 55% width, extra spacing on mobile */}
+      <div className="relative z-10 flex flex-col items-center justify-center w-full md:w-[55%] shrink-0 mt-10 md:mt-0">
         <HeroSlider images={CAROUSEL_IMAGES} />
       </div>
     </section>
