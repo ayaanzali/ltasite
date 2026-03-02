@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { SectionReveal } from "./SectionReveal";
 
@@ -118,6 +119,7 @@ function OfficerCard({
   officer: Officer;
   delay: number;
 }) {
+  const [imgError, setImgError] = useState(false);
   const Wrapper = officer.linkedInUrl ? motion.a : motion.div;
   const wrapperProps = officer.linkedInUrl
     ? {
@@ -129,6 +131,7 @@ function OfficerCard({
   const { first, last } = splitName(officer.name);
   const fallbackInitials =
     officer.initials ?? officer.name.split(/\s+/).map((n) => n[0]).join("").slice(0, 2);
+  const showInitials = !officer.imageUrl || imgError;
 
   return (
     <SectionReveal delay={delay}>
@@ -138,25 +141,20 @@ function OfficerCard({
         className="block group rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm hover:border-blue-600/30 transition-colors duration-200"
       >
         <div className="aspect-square bg-[#1D2A3F] flex items-center justify-center overflow-hidden relative">
-          {officer.imageUrl ? (
+          {officer.imageUrl && !imgError && (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={officer.imageUrl}
               alt={officer.name}
               className="w-full h-full object-cover object-center"
-              onError={(e) => {
-                e.currentTarget.style.display = "none";
-                const fallback = e.currentTarget.nextElementSibling;
-                if (fallback) (fallback as HTMLElement).style.display = "flex";
-              }}
+              onError={() => setImgError(true)}
             />
-          ) : null}
-          <span
-            className="text-white font-semibold text-2xl absolute inset-0 flex items-center justify-center"
-            style={{ display: officer.imageUrl ? "none" : "flex" }}
-          >
-            {fallbackInitials}
-          </span>
+          )}
+          {showInitials && (
+            <span className="text-white font-semibold text-2xl absolute inset-0 flex items-center justify-center">
+              {fallbackInitials}
+            </span>
+          )}
         </div>
         <div className="p-5 min-h-[7.5rem] flex flex-col">
           <h3 className="font-sans text-lg font-semibold text-navy group-hover:text-blue-600 transition-colors leading-tight">
