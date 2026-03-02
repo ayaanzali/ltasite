@@ -1,16 +1,14 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
+import { Logo } from "@/components/Logo";
 
 export default async function PendingPage() {
   const { userId } = await auth();
   if (!userId) redirect("/sign-in");
   return (
     <main className="min-h-screen bg-[#1D2A3F] flex flex-col items-center justify-center px-6 py-12">
-      <Image
-        src="/lta-logo.png"
-        alt="LTA"
+      <Logo
         width={80}
         height={80}
         className="object-contain mb-8"

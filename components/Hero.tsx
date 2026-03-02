@@ -1,15 +1,15 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { useWebsiteImages } from "@/hooks/useWebsiteImages";
 
 const headline = "Where Future Advocates Build Their Case.";
 const words = headline.split(" ");
 
-// Top carousel: /public/starting-photos/ — hardcoded only (12 JPGs)
-const CAROUSEL_IMAGES = [
+const FALLBACK_CAROUSEL = [
   "/starting-photos/1.JPG", "/starting-photos/2.JPG", "/starting-photos/3.JPG",
   "/starting-photos/4.JPG", "/starting-photos/5.JPG", "/starting-photos/6.JPG",
   "/starting-photos/7.JPG", "/starting-photos/8.JPG", "/starting-photos/9.JPG",
@@ -142,6 +142,16 @@ function HeroSlider({ images }: { images: string[] }) {
 }
 
 export function Hero() {
+  const img = useWebsiteImages();
+  const carouselImages = useMemo(() => {
+    if (!img) return FALLBACK_CAROUSEL;
+    const arr = [
+      img.Hero1, img.Hero2, img.Hero3, img.Hero4, img.Hero5, img.Hero6,
+      img.Hero7, img.Hero8, img.Hero9, img.Hero10, img.Hero11, img.Hero12,
+    ].filter(Boolean) as string[];
+    return arr.length > 0 ? arr : FALLBACK_CAROUSEL;
+  }, [img]);
+
   return (
     <section
       className="relative w-full min-h-screen flex flex-col md:flex-row items-center justify-center md:items-center md:justify-center bg-[#1D2A3F] gap-16 md:gap-12"
@@ -215,7 +225,7 @@ export function Hero() {
 
       {/* Right column: carousel — 55% width, generous spacing from buttons on mobile */}
       <div className="relative z-10 flex flex-col items-center justify-center w-full md:w-[55%] shrink-0">
-        <HeroSlider images={CAROUSEL_IMAGES} />
+        <HeroSlider images={carouselImages} />
       </div>
     </section>
   );

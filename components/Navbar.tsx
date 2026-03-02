@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { Logo } from "./Logo";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 
@@ -39,13 +39,7 @@ export function Navbar() {
             onClick={() => setMobileOpen(false)}
           >
             <span className="w-9 h-9 flex items-center justify-center shrink-0">
-              <Image
-                src="/lta-logo.png"
-                alt="LTA"
-                width={36}
-                height={36}
-                className="object-contain"
-              />
+              <Logo width={36} height={36} />
             </span>
             <span className="font-inter font-semibold text-navy hidden sm:inline text-[15px]">
               Law & Trial Association

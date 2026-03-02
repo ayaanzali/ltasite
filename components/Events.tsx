@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { Logo } from "./Logo";
 import { motion } from "framer-motion";
 import { SectionReveal } from "./SectionReveal";
 
@@ -148,9 +149,7 @@ export function Events() {
                       />
                     ) : (
                       <div className="absolute inset-0 flex items-center justify-center bg-[#1D2A3F]">
-                        <Image
-                          src="/lta-logo.png"
-                          alt="LTA"
+                        <Logo
                           width={80}
                           height={80}
                           className="opacity-40"

@@ -1,7 +1,9 @@
 "use client";
 
+import { useMemo } from "react";
 import Image from "next/image";
 import { SectionReveal } from "./SectionReveal";
+import { useWebsiteImages } from "@/hooks/useWebsiteImages";
 
 const stats = [
   "Real Texas Courtroom",
@@ -9,15 +11,14 @@ const stats = [
   "December 2025",
 ];
 
-// Two showcase images: winning team (left), runner-up (right). Uses 1.JPG and 2.JPG from /public/competition-photos/
 const WINNING_TEAM = {
-  image: "/competition-photos/1.JPG",
+  fallback: "/competition-photos/1.JPG",
   heading: "Winning Team",
   name: "Dorsa Zilaee, Likhit Kadiam, Rashmi Ravindran",
 };
 
 const RUNNER_UP = {
-  image: "/competition-photos/2.JPG",
+  fallback: "/competition-photos/2.JPG",
   heading: "Runner Up",
   name: "Khadijah Khalid, Aadharshini Thangapandian",
 };
@@ -59,6 +60,10 @@ function WinnerCard({
 }
 
 export function Gallery() {
+  const img = useWebsiteImages();
+  const winningImage = img?.Gallery1 ?? WINNING_TEAM.fallback;
+  const runnerUpImage = img?.Gallery2 ?? RUNNER_UP.fallback;
+
   return (
     <section id="gallery" className="py-24 px-6 bg-[#1D2A3F]" suppressHydrationWarning>
       <div className="max-w-6xl mx-auto">
@@ -87,12 +92,12 @@ export function Gallery() {
         <SectionReveal>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 lg:gap-16">
             <WinnerCard
-              image={WINNING_TEAM.image}
+              image={winningImage}
               heading={WINNING_TEAM.heading}
               name={WINNING_TEAM.name}
             />
             <WinnerCard
-              image={RUNNER_UP.image}
+              image={runnerUpImage}
               heading={RUNNER_UP.heading}
               name={RUNNER_UP.name}
             />

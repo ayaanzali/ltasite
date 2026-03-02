@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useWebsiteImages } from "@/hooks/useWebsiteImages";
+import type { WebsiteImages } from "@/lib/airtable-images";
 import { SectionReveal } from "./SectionReveal";
 
 export type Officer = {
@@ -14,95 +16,24 @@ export type Officer = {
   isDirector?: boolean;
 };
 
-const execBoard: Officer[] = [
-  {
-    name: "Ayaan Ali",
-    title: "President",
-    imageUrl: "/images/Ayaan.JPG",
-    linkedInUrl: "https://www.linkedin.com/in/ayaanzali/",
-  },
-  {
-    name: "Ram Sundararaman",
-    title: "Vice President",
-    imageUrl: "/images/Ram.JPG",
-    linkedInUrl: "https://www.linkedin.com/in/sriramsundararaman",
-  },
-  {
-    name: "Dorsa Zilaee",
-    title: "Executive Director",
-    initials: "DZ",
-  },
-  {
-    name: "Tanisha Dossa",
-    title: "Secretary",
-    imageUrl: "/images/Tanisha.JPG",
-    linkedInUrl: "https://www.linkedin.com/in/tanisha-dossa-87a80127a/",
-  },
-  {
-    name: "Amrita Singh",
-    title: "Treasurer",
-    initials: "AS",
-  },
+const execBoard: (Officer & { imageKey?: keyof import("@/lib/airtable-images").WebsiteImages })[] = [
+  { name: "Ayaan Ali", title: "President", imageKey: "OfficerAyaan", linkedInUrl: "https://www.linkedin.com/in/ayaanzali/" },
+  { name: "Ram Sundararaman", title: "Vice President", imageKey: "OfficerRam", linkedInUrl: "https://www.linkedin.com/in/sriramsundararaman" },
+  { name: "Dorsa Zilaee", title: "Executive Director", initials: "DZ" },
+  { name: "Tanisha Dossa", title: "Secretary", imageKey: "OfficerTanisha", linkedInUrl: "https://www.linkedin.com/in/tanisha-dossa-87a80127a/" },
+  { name: "Amrita Singh", title: "Treasurer", initials: "AS" },
 ];
 
-const directors: Officer[] = [
-  {
-    name: "Aishah Abdullah",
-    title: "Programming Director",
-    imageUrl: "/images/Aishah.png",
-    linkedInUrl: "https://www.linkedin.com/in/aishahabdulla/",
-    isDirector: true,
-  },
-  {
-    name: "Nethra Kartheeswaran",
-    title: "Marketing Co-Director",
-    imageUrl: "/images/Nethra.JPG",
-    linkedInUrl: "https://www.linkedin.com/in/nethrapk/",
-    isDirector: true,
-  },
-  {
-    name: "Aafiya Vahora",
-    title: "Marketing Co-Director",
-    imageUrl: "/images/Aafiya.png",
-    linkedInUrl: "https://www.linkedin.com/in/aafiyavahora/",
-    isDirector: true,
-  },
-  {
-    name: "Aaryan Merchant",
-    title: "Media Co-Director",
-    initials: "AM",
-    isDirector: true,
-  },
-  {
-    name: "Varad Kulkarni",
-    title: "Media Co-Director",
-    initials: "VK",
-    isDirector: true,
-  },
-  {
-    name: "Neha Kandi",
-    title: "Events Director",
-    imageUrl: "/images/Neha.JPG",
-    isDirector: true,
-  },
-  {
-    name: "Mohamad Alsafi",
-    title: "Fundraising Director",
-    initials: "MA",
-    isDirector: true,
-  },
-  {
-    name: "Khadijah Khalid",
-    title: "Outreach Director",
-    imageUrl: "/images/Khadijah.JPG",
-    isDirector: true,
-  },
-  {
-    name: "Aaradhya Arkatkar",
-    title: "Growth Director",
-    initials: "AA",
-    isDirector: true,
-  },
+const directors: (Officer & { imageKey?: keyof import("@/lib/airtable-images").WebsiteImages })[] = [
+  { name: "Aishah Abdullah", title: "Programming Director", imageKey: "OfficerAishah", linkedInUrl: "https://www.linkedin.com/in/aishahabdulla/", isDirector: true },
+  { name: "Nethra Kartheeswaran", title: "Marketing Co-Director", imageKey: "OfficerNethra", linkedInUrl: "https://www.linkedin.com/in/nethrapk/", isDirector: true },
+  { name: "Aafiya Vahora", title: "Marketing Co-Director", imageKey: "OfficerAafiya", linkedInUrl: "https://www.linkedin.com/in/aafiyavahora/", isDirector: true },
+  { name: "Aaryan Merchant", title: "Media Co-Director", initials: "AM", isDirector: true },
+  { name: "Varad Kulkarni", title: "Media Co-Director", initials: "VK", isDirector: true },
+  { name: "Neha Kandi", title: "Events Director", imageKey: "OfficerNeha", isDirector: true },
+  { name: "Mohamad Alsafi", title: "Fundraising Director", initials: "MA", isDirector: true },
+  { name: "Khadijah Khalid", title: "Outreach Director", imageKey: "OfficerKhadijah", isDirector: true },
+  { name: "Aaradhya Arkatkar", title: "Growth Director", initials: "AA", isDirector: true },
 ];
 
 function splitName(fullName: string): { first: string; last: string } {
@@ -113,11 +44,22 @@ function splitName(fullName: string): { first: string; last: string } {
   return { first, last };
 }
 
+const FALLBACK_OFFICER_IMAGES: Record<string, string> = {
+  OfficerAyaan: "/images/Ayaan.JPG",
+  OfficerRam: "/images/Ram.JPG",
+  OfficerTanisha: "/images/Tanisha.JPG",
+  OfficerAishah: "/images/Aishah.png",
+  OfficerNethra: "/images/Nethra.JPG",
+  OfficerAafiya: "/images/Aafiya.png",
+  OfficerNeha: "/images/Neha.JPG",
+  OfficerKhadijah: "/images/Khadijah.JPG",
+};
+
 function OfficerCard({
   officer,
   delay,
 }: {
-  officer: Officer;
+  officer: Officer & { imageKey?: keyof WebsiteImages };
   delay: number;
 }) {
   const [imgError, setImgError] = useState(false);
@@ -132,7 +74,8 @@ function OfficerCard({
   const { first, last } = splitName(officer.name);
   const fallbackInitials =
     officer.initials ?? officer.name.split(/\s+/).map((n) => n[0]).join("").slice(0, 2);
-  const showInitials = !officer.imageUrl || imgError;
+  const imageUrl = officer.imageUrl;
+  const showInitials = !imageUrl || imgError;
 
   return (
     <SectionReveal delay={delay}>
@@ -142,9 +85,9 @@ function OfficerCard({
         className="block group rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm hover:border-blue-600/30 transition-colors duration-200"
       >
         <div className="aspect-square bg-[#1D2A3F] flex items-center justify-center overflow-hidden relative">
-          {officer.imageUrl && !imgError && (
+          {imageUrl && !imgError && (
             <Image
-              src={officer.imageUrl}
+              src={imageUrl}
               alt={officer.name}
               fill
               sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 200px"
@@ -180,6 +123,15 @@ function OfficerCard({
 }
 
 export function Officers() {
+  const img = useWebsiteImages();
+  const resolveOfficers = useMemo(() => {
+    const resolve = (o: (typeof execBoard)[0] | (typeof directors)[0]) => ({
+      ...o,
+      imageUrl: o.imageKey ? ((img?.[o.imageKey] as string | undefined) ?? FALLBACK_OFFICER_IMAGES[o.imageKey]) : undefined,
+    });
+    return { exec: execBoard.map(resolve), dirs: directors.map(resolve) };
+  }, [img]);
+
   return (
     <section id="officers" className="py-24 px-6 bg-[#F4F1EC]">
       <div className="max-w-6xl mx-auto">
@@ -194,7 +146,7 @@ export function Officers() {
 
         <p className="text-sm font-medium text-gray-500 mb-6">Executive Board</p>
         <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6 lg:gap-8 mb-16">
-          {execBoard.map((officer, i) => (
+          {resolveOfficers.exec.map((officer, i) => (
             <OfficerCard key={officer.name} officer={officer} delay={i * 0.05} />
           ))}
         </div>
@@ -202,12 +154,12 @@ export function Officers() {
         <p className="text-sm font-medium text-gray-500 mb-6">Directors</p>
         <div className="flex flex-col gap-8">
           <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6 lg:gap-8">
-            {directors.slice(0, 5).map((officer, i) => (
+            {resolveOfficers.dirs.slice(0, 5).map((officer, i) => (
               <OfficerCard key={officer.name} officer={officer} delay={i * 0.04} />
             ))}
           </div>
           <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 xl:flex xl:flex-wrap xl:justify-center xl:gap-8 [&>*]:xl:w-[calc((100%-8rem)/5)] gap-4 sm:gap-6 lg:gap-8">
-            {directors.slice(5, 9).map((officer, i) => (
+            {resolveOfficers.dirs.slice(5, 9).map((officer, i) => (
               <OfficerCard key={officer.name} officer={officer} delay={(5 + i) * 0.04} />
             ))}
           </div>

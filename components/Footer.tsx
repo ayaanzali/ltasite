@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Logo } from "./Logo";
 
 const pageLinks = [
   { label: "About", href: "#about" },
@@ -23,9 +24,7 @@ export function Footer() {
           <div className="md:col-span-4 flex flex-col sm:flex-row md:flex-col items-center sm:items-start md:items-start gap-4">
             <Link href="#" className="flex items-center gap-3 shrink-0 group">
               <div className="w-12 h-12 rounded-full bg-[#1D2A3F] p-1.5 flex items-center justify-center ring-2 ring-[#1D2A3F]/10">
-                <img
-                  src="/lta-logo.png"
-                  alt="LTA"
+                <Logo
                   width={40}
                   height={40}
                   className="w-full h-full object-contain"
