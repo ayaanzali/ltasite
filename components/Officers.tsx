@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { SectionReveal } from "./SectionReveal";
 
@@ -62,7 +63,7 @@ const directors: Officer[] = [
   {
     name: "Aafiya Vahora",
     title: "Marketing Co-Director",
-    imageUrl: "/images/Aafiya.JPG",
+    imageUrl: "/images/Aafiya.png",
     linkedInUrl: "https://www.linkedin.com/in/aafiyavahora/",
     isDirector: true,
   },
@@ -81,7 +82,7 @@ const directors: Officer[] = [
   {
     name: "Neha Kandi",
     title: "Events Director",
-    initials: "NK",
+    imageUrl: "/images/Neha.JPG",
     isDirector: true,
   },
   {
@@ -93,7 +94,7 @@ const directors: Officer[] = [
   {
     name: "Khadijah Khalid",
     title: "Outreach Director",
-    initials: "KK",
+    imageUrl: "/images/Khadijah.JPG",
     isDirector: true,
   },
   {
@@ -142,12 +143,15 @@ function OfficerCard({
       >
         <div className="aspect-square bg-[#1D2A3F] flex items-center justify-center overflow-hidden relative">
           {officer.imageUrl && !imgError && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={officer.imageUrl}
               alt={officer.name}
-              className="w-full h-full object-cover object-center"
+              fill
+              sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 200px"
+              className="object-cover object-center"
               onError={() => setImgError(true)}
+              loading="lazy"
+              quality={80}
             />
           )}
           {showInitials && (
