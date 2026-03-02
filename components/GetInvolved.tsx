@@ -33,33 +33,29 @@ export function GetInvolved() {
 
       <AmbassadorSection />
 
-      {/* Top row: panning effect on mobile/tablet, hover to pause */}
+      {/* Top row: Next.js Image for fast mobile loading */}
       <div className="grid grid-cols-2 gap-0 w-full h-[220px] sm:h-[320px] md:h-[420px] lg:h-[500px]">
-        <div className="relative overflow-hidden grayscale hover:grayscale-0 transition-all duration-500 group">
-          <div className="absolute inset-0 w-[115%] h-full animate-pan-slow group-hover:[animation-play-state:paused]">
-            <Image
-              src="/bottom-section-photos/1.PNG"
-              alt=""
-              fill
-              sizes="50vw"
-              loading="lazy"
-              className="object-cover"
-              style={{ objectPosition: "center 5%" }}
-            />
-          </div>
+        <div className="relative overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
+          <Image
+            src="/bottom-section-photos/1.PNG"
+            alt=""
+            fill
+            sizes="50vw"
+            loading="lazy"
+            className="object-cover"
+            style={{ objectPosition: "center 5%" }}
+          />
         </div>
-        <div className="relative overflow-hidden grayscale hover:grayscale-0 transition-all duration-500 group">
-          <div className="absolute inset-0 w-[115%] h-full animate-pan-slow group-hover:[animation-play-state:paused]">
-            <Image
-              src="/bottom-section-photos/2.PNG"
-              alt=""
-              fill
-              sizes="50vw"
-              loading="lazy"
-              className="object-cover"
-              style={{ objectPosition: "80% 5%" }}
-            />
-          </div>
+        <div className="relative overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
+          <Image
+            src="/bottom-section-photos/2.PNG"
+            alt=""
+            fill
+            sizes="50vw"
+            loading="lazy"
+            className="object-cover"
+            style={{ objectPosition: "80% 5%" }}
+          />
         </div>
       </div>
       {/* Bottom row: Next.js Image for fast mobile loading */}

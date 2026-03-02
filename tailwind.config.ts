@@ -23,15 +23,6 @@ const config: Config = {
         playfair: ["var(--font-playfair)", "Playfair Display", "serif"],
         serif: ["var(--font-playfair)", "Playfair Display", "serif"],
       },
-      keyframes: {
-        "pan-slow": {
-          "0%, 100%": { transform: "translateX(0)" },
-          "50%": { transform: "translateX(-15%)" },
-        },
-      },
-      animation: {
-        "pan-slow": "pan-slow 20s ease-in-out infinite",
-      },
     },
   },
   plugins: [],
