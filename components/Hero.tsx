@@ -82,9 +82,12 @@ function HeroSlider({ images }: { images: string[] }) {
                 src={images[index]}
                 alt={`Photo ${index + 1}`}
                 fill
-                sizes="(max-width: 768px) 100vw, 600px"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
                 loading={index === 0 ? "eager" : "lazy"}
                 priority={index === 0}
+                quality={70}
+                placeholder="blur"
+                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAAIAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAUH/8QAIhAAAgEDBAMBAAAAAAAAAAAAAQIDAAQRBRIhMQYTQVFh/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAZEQACAwEAAAAAAAAAAAAAAAABAgADESH/2gAMAwEAAhEDEEA/ALWn6hqFjZxW1rdzQwxrtREcgKPgUUUUH//Z"
                 className="object-cover object-center"
               />
             </motion.div>
@@ -141,7 +144,7 @@ function HeroSlider({ images }: { images: string[] }) {
 export function Hero() {
   return (
     <section
-      className="relative w-full min-h-screen flex flex-col md:flex-row items-center justify-center md:items-center md:justify-center bg-[#1D2A3F] gap-8 md:gap-12"
+      className="relative w-full min-h-screen flex flex-col md:flex-row items-center justify-center md:items-center md:justify-center bg-[#1D2A3F] gap-16 md:gap-12"
       style={{ padding: "clamp(48px, 8vw, 60px) clamp(24px, 5vw, 48px)" }}
       suppressHydrationWarning
     >
@@ -192,7 +195,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.75 }}
-            className="flex flex-wrap gap-4"
+            className="flex flex-wrap gap-4 mb-0"
           >
             <Link
               href="#get-involved"
@@ -210,8 +213,8 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Right column: carousel — 55% width, extra spacing on mobile */}
-      <div className="relative z-10 flex flex-col items-center justify-center w-full md:w-[55%] shrink-0 mt-10 md:mt-0">
+      {/* Right column: carousel — 55% width, generous spacing from buttons on mobile */}
+      <div className="relative z-10 flex flex-col items-center justify-center w-full md:w-[55%] shrink-0">
         <HeroSlider images={CAROUSEL_IMAGES} />
       </div>
     </section>
