@@ -75,7 +75,8 @@ function OfficerCard({ officer, delay }: { officer: Officer & { imageUrl?: strin
               alt={officer.name}
               fill
               sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 200px"
-              className="object-cover object-center"
+              className="object-cover"
+              style={{ objectPosition: "top center" }}
               onError={() => setImgError(true)}
               loading="lazy"
               quality={80}
@@ -136,17 +137,12 @@ export function Officers() {
         </div>
 
         <p className="text-sm font-medium text-gray-500 mb-6">Directors</p>
-        <div className="flex flex-col gap-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6 lg:gap-8">
-            {resolveOfficers.dirs.slice(0, 5).map((officer, i) => (
-              <OfficerCard key={officer.name} officer={officer} delay={i * 0.04} />
-            ))}
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6 lg:gap-8">
-            {resolveOfficers.dirs.slice(5, 9).map((officer, i) => (
-              <OfficerCard key={officer.name} officer={officer} delay={(5 + i) * 0.04} />
-            ))}
-          </div>
+        <div className="flex flex-wrap justify-center gap-4 sm:gap-6 lg:gap-8">
+          {resolveOfficers.dirs.map((officer, i) => (
+            <div key={officer.name} className="flex-[1_1_min(100%,280px)]">
+              <OfficerCard officer={officer} delay={i * 0.04} />
+            </div>
+          ))}
         </div>
       </div>
     </section>

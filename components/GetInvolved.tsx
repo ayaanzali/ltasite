@@ -10,8 +10,8 @@ import { useWebsiteImages } from "@/hooks/useWebsiteImages";
 const SECTION = "bottom-section-photos";
 // Top row: 2 landscape images (1.PNG, 2.PNG)
 const TOP_ROW = [
-  { name: "1.PNG", objectPosition: "center center" as const },
-  { name: "2.PNG", objectPosition: "center center" as const },
+  { name: "1.PNG", objectPosition: "top center" as const },
+  { name: "2.PNG", objectPosition: "top center" as const },
 ];
 // Bottom row: 3 portrait images (4.PNG, 5.PNG, 6.PNG)
 const BOTTOM_ROW = [

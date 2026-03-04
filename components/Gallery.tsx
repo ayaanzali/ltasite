@@ -48,7 +48,8 @@ function WinnerCard({
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
               loading="lazy"
-              className="object-cover object-center"
+              className="object-cover"
+              style={{ objectPosition: "center center" }}
               onError={() => setImgError(true)}
             />
           )}
@@ -63,10 +64,12 @@ function WinnerCard({
 }
 
 export function Gallery() {
-  const { getImageUrl, images } = useWebsiteImages();
-  // Derive URLs from images so we re-render when the cache loads
+  const { getImageUrl } = useWebsiteImages();
   const winningImage = getImageUrl(SECTION, WINNING_TEAM.file);
   const runnerUpImage = getImageUrl(SECTION, RUNNER_UP.file);
+
+  console.log("[Gallery] winningImage src:", winningImage);
+  console.log("[Gallery] runnerUpImage src:", runnerUpImage);
 
   return (
     <section id="gallery" className="py-24 px-4 md:px-8 lg:px-12 xl:px-16 bg-[#1D2A3F]" suppressHydrationWarning>
