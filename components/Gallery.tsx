@@ -12,8 +12,8 @@ const stats = [
 ];
 
 const SECTION = "competition-photos";
-const WINNING_TEAM = { file: "1.JPG", heading: "Winning Team", name: "Dorsa Zilaee, Likhit Kadiam, Rashmi Ravindran", initials: "WT" };
-const RUNNER_UP = { file: "2.JPG", heading: "Runner Up", name: "Khadijah Khalid, Aadharshini Thangapandian", initials: "RU" };
+const WINNING_TEAM = { file: "1.PNG", heading: "Winning Team", name: "Dorsa Zilaee, Likhit Kadiam, Rashmi Ravindran", initials: "WT" };
+const RUNNER_UP = { file: "2.PNG", heading: "Runner Up", name: "Khadijah Khalid, Aadharshini Thangapandian", initials: "RU" };
 
 function WinnerCard({
   image,
