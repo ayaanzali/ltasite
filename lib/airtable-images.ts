@@ -9,8 +9,10 @@
 
 const Airtable = require("airtable");
 
-/** Exact env var names read at runtime - must match Vercel: AIRTABLE_API_KEY, AIRTABLE_IMAGES_BASE_ID, AIRTABLE_IMAGES_TABLE_ID */
-const API_KEY = process.env.AIRTABLE_API_KEY ?? "";
+/** TEMP: Hardcode token to test if env loading is the issue. Paste your Airtable personal access token below.
+ *  Once images load, remove this and use process.env.AIRTABLE_API_KEY only. */
+const HARDCODED_TOKEN_FOR_TEST = ""; // <-- Paste your token here for testing
+const API_KEY = HARDCODED_TOKEN_FOR_TEST || process.env.AIRTABLE_API_KEY ?? "";
 const IMAGES_BASE_ID = process.env.AIRTABLE_IMAGES_BASE_ID ?? "appcpycTwtluUN3Fq";
 const IMAGES_TABLE_ID = process.env.AIRTABLE_IMAGES_TABLE_ID ?? "tblOMpFxnkRwxfuEE";
 
