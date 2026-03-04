@@ -26,8 +26,6 @@ function logEnvVars() {
 
 type ImageMap = Record<string, string>;
 
-let cachedImages: ImageMap | null = null;
-
 function buildKey(section: string, name: string): string {
   return section ? `${section}/${name}` : name;
 }
@@ -62,11 +60,10 @@ function findByBaseName(images: ImageMap, section: string, name: string): string
 
 export async function fetchWebsiteImages(): Promise<ImageMap> {
   logEnvVars();
-  if (cachedImages) return cachedImages;
+  console.log("[airtable-images] API_KEY resolved, length:", API_KEY.length);
   if (!API_KEY) {
     console.log("[airtable-images] Skipping fetch: AIRTABLE_API_KEY is empty");
-    cachedImages = {};
-    return cachedImages;
+    return {};
   }
   try {
     const base = new Airtable({ apiKey: API_KEY }).base(IMAGES_BASE_ID);
@@ -86,8 +83,7 @@ export async function fetchWebsiteImages(): Promise<ImageMap> {
           (err) => {
             if (err) {
               console.error("[airtable-images] fetch error:", err);
-              cachedImages = {};
-              resolve(cachedImages);
+              resolve({});
               return;
             }
             const result: ImageMap = {};
@@ -100,15 +96,13 @@ export async function fetchWebsiteImages(): Promise<ImageMap> {
                 result[buildKey(section, name)] = url;
               }
             }
-            cachedImages = result;
             resolve(result);
           }
         );
     });
   } catch (e) {
     console.error("[airtable-images] error:", e);
-    cachedImages = {};
-    return cachedImages;
+    return {};
   }
 }
 
