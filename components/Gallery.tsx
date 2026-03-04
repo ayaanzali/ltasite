@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { SectionReveal } from "./SectionReveal";
 import { useWebsiteImages } from "@/hooks/useWebsiteImages";
@@ -27,6 +27,9 @@ function WinnerCard({
   initials: string;
 }) {
   const [imgError, setImgError] = useState(false);
+  useEffect(() => {
+    setImgError(false);
+  }, [image]);
   const showPlaceholder = !image || imgError;
   return (
     <div className="flex flex-col min-w-0">
@@ -99,14 +102,14 @@ export function Gallery() {
         <SectionReveal>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 lg:gap-12 xl:gap-16 max-w-5xl mx-auto justify-items-center">
             <WinnerCard
-              key={winningImage ?? "winning-loading"}
+              key="winning"
               image={winningImage}
               heading={WINNING_TEAM.heading}
               name={WINNING_TEAM.name}
               initials={WINNING_TEAM.initials}
             />
             <WinnerCard
-              key={runnerUpImage ?? "runnerup-loading"}
+              key="runnerup"
               image={runnerUpImage}
               heading={RUNNER_UP.heading}
               name={RUNNER_UP.name}
