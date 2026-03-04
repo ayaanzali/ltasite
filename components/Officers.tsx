@@ -117,10 +117,10 @@ export function Officers() {
   }, [getImageUrl]);
 
   return (
-    <section id="officers" className="py-24 px-6 bg-[#F4F1EC]">
-      <div className="max-w-6xl mx-auto">
+    <section id="officers" className="py-24 px-4 md:px-8 lg:px-12 xl:px-16 bg-[#F4F1EC]">
+      <div className="max-w-7xl mx-auto">
         <SectionReveal>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-navy text-center mb-4">
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-navy text-center mb-4">
             Meet the Team
           </h2>
           <p className="text-gray-600 text-center max-w-2xl mx-auto mb-16">
@@ -129,7 +129,7 @@ export function Officers() {
         </SectionReveal>
 
         <p className="text-sm font-medium text-gray-500 mb-6">Executive Board</p>
-        <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6 lg:gap-8 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6 lg:gap-8 mb-16">
           {resolveOfficers.exec.map((officer, i) => (
             <OfficerCard key={officer.name} officer={officer} delay={i * 0.05} />
           ))}
@@ -137,12 +137,12 @@ export function Officers() {
 
         <p className="text-sm font-medium text-gray-500 mb-6">Directors</p>
         <div className="flex flex-col gap-8">
-          <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6 lg:gap-8">
             {resolveOfficers.dirs.slice(0, 5).map((officer, i) => (
               <OfficerCard key={officer.name} officer={officer} delay={i * 0.04} />
             ))}
           </div>
-          <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 xl:flex xl:flex-wrap xl:justify-center xl:gap-8 [&>*]:xl:w-[calc((100%-8rem)/5)] gap-4 sm:gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6 lg:gap-8">
             {resolveOfficers.dirs.slice(5, 9).map((officer, i) => (
               <OfficerCard key={officer.name} officer={officer} delay={(5 + i) * 0.04} />
             ))}

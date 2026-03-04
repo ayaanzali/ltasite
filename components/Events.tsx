@@ -136,10 +136,10 @@ export function Events() {
     count === 1 ? "grid-cols-1 max-w-[400px]" : count === 2 ? "grid-cols-1 md:grid-cols-2 max-w-[800px]" : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-[1100px]";
 
   return (
-    <section id="events" className="py-24 px-6 bg-[#EEEEE8]">
-      <div className="mx-auto">
+    <section id="events" className="py-24 px-4 md:px-8 lg:px-12 xl:px-16 bg-[#EEEEE8]">
+      <div className="max-w-7xl mx-auto">
         <SectionReveal>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-navy text-center mb-4">
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-navy text-center mb-4">
             Upcoming Events
           </h2>
           <p className="text-gray-600 text-center max-w-2xl mx-auto mb-16">

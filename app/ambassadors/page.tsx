@@ -125,7 +125,12 @@ export default function AmbassadorsPage() {
 
   return (
     <main className="min-h-screen bg-[#F4F1EC]">
-      <div className="max-w-2xl mx-auto py-16 px-6">
+      <div className="max-w-2xl mx-auto py-16 px-4 md:px-8 lg:px-12 xl:px-16">
+        <p className="mb-6">
+          <Link href="/" className="font-inter text-sm text-[#1D2A3F] hover:underline">
+            ← Back to home
+          </Link>
+        </p>
         <h1 className="font-playfair text-3xl sm:text-4xl font-bold text-[#1D2A3F] mb-3 text-center">
           Become an LTA Ambassador
         </h1>

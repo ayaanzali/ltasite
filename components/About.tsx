@@ -46,7 +46,7 @@ export function About() {
 
   return (
     <section id="about" className="py-24 bg-[#F4F1EC] w-full relative">
-      <div className="w-full max-w-7xl mx-auto px-6 lg:px-12">
+      <div className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 xl:px-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           {/* Left column: existing About content */}
           <div>
@@ -54,7 +54,7 @@ export function About() {
               <p className="text-blue text-xs font-bold tracking-widest uppercase mb-2">
                 WHO WE ARE
               </p>
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-navy mb-6">
+              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-navy mb-6">
                 Developing Legal Minds at UT Dallas
               </h2>
               <p className="text-gray-600 max-w-3xl text-lg mb-4">

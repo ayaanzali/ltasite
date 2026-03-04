@@ -159,12 +159,12 @@ export function Hero() {
 
   return (
     <section
-      className="relative w-full min-h-screen flex flex-col md:flex-row items-center justify-center md:items-center md:justify-center bg-[#1D2A3F] gap-16 md:gap-12"
-      style={{ padding: "clamp(48px, 8vw, 60px) clamp(24px, 5vw, 48px)" }}
+      className="relative w-full min-h-screen flex flex-col md:flex-row items-center justify-center md:items-center md:justify-center bg-[#1D2A3F] gap-12 md:gap-12 lg:gap-16"
       suppressHydrationWarning
     >
+      <div className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 xl:px-16 py-12 md:py-16 lg:py-20 flex flex-col md:flex-row items-center justify-center md:items-center md:justify-between gap-12 md:gap-8 lg:gap-12">
       {/* Left column: text — 45% width */}
-      <div className="relative z-10 flex flex-col justify-center w-full md:w-[45%] shrink-0">
+      <div className="relative z-10 flex flex-col justify-center w-full md:max-w-[45%] md:min-w-0 shrink-0">
         <div className="flex flex-col justify-center">
           <motion.p
             initial={{ opacity: 0, y: 8 }}
@@ -175,8 +175,7 @@ export function Hero() {
             THE LAW & TRIAL ASSOCIATION AT UTD
           </motion.p>
           <h1
-            className="font-playfair font-bold text-white tracking-tight leading-[1.1] mb-5"
-            style={{ fontSize: "clamp(2rem, 4vw, 4.5rem)" }}
+            className="font-playfair font-bold text-white tracking-tight leading-[1.1] mb-5 text-3xl sm:text-4xl md:text-[2.75rem] lg:text-[3.5rem] xl:text-[4rem] 2xl:text-[4.5rem]"
           >
             {words.map((word, i) => (
               <motion.span
@@ -228,9 +227,10 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Right column: carousel — 55% width, generous spacing from buttons on mobile */}
-      <div className="relative z-10 flex flex-col items-center justify-center w-full md:w-[55%] shrink-0">
+      {/* Right column: carousel — 55% width */}
+      <div className="relative z-10 flex flex-col items-center justify-center w-full md:max-w-[55%] md:min-w-0 shrink-0">
         <HeroSlider slides={carouselSlides} />
+      </div>
       </div>
     </section>
   );

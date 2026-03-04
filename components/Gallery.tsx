@@ -68,13 +68,13 @@ export function Gallery() {
   const runnerUpImage = getImageUrl(SECTION, RUNNER_UP.file);
 
   return (
-    <section id="gallery" className="py-24 px-6 bg-[#1D2A3F]" suppressHydrationWarning>
-      <div className="max-w-6xl mx-auto">
+    <section id="gallery" className="py-24 px-4 md:px-8 lg:px-12 xl:px-16 bg-[#1D2A3F]" suppressHydrationWarning>
+      <div className="max-w-7xl mx-auto">
         <SectionReveal>
           <p className="text-blue text-xs font-bold tracking-widest uppercase mb-2">
             THE COMPETITION
           </p>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
             LTA&apos;s 2025 Intramural Mock Trial Competition
           </h2>
           <p className="text-slate-300 max-w-3xl text-lg mb-6">
@@ -93,7 +93,7 @@ export function Gallery() {
         </SectionReveal>
 
         <SectionReveal>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 lg:gap-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 lg:gap-12 xl:gap-16 max-w-5xl mx-auto justify-items-center">
             <WinnerCard
               image={winningImage}
               heading={WINNING_TEAM.heading}

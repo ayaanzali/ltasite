@@ -47,8 +47,13 @@ export default function VerifyMembershipPage() {
   if (!userId) return null;
 
   return (
-    <main className="min-h-screen bg-[#F4F1EC] flex flex-col items-center justify-center px-6 py-12">
+    <main className="min-h-screen bg-[#F4F1EC] flex flex-col items-center justify-center px-4 md:px-8 lg:px-12 xl:px-16 py-12">
       <div className="w-full max-w-md">
+        <p className="mb-6 text-center">
+          <Link href="/" className="font-inter text-sm text-[#1D2A3F] hover:underline">
+            ← Back to home
+          </Link>
+        </p>
         <h1 className="font-playfair text-2xl font-bold text-[#1D2A3F] text-center mb-2">
           Verify your membership
         </h1>
@@ -78,12 +83,6 @@ export default function VerifyMembershipPage() {
         {status === "error" && errorMessage && (
           <p className="mt-4 text-sm text-red-600 text-center">{errorMessage}</p>
         )}
-
-        <p className="mt-8 text-center">
-          <Link href="/" className="font-inter text-sm text-[#1D2A3F] hover:underline">
-            ← Back to home
-          </Link>
-        </p>
       </div>
     </main>
   );

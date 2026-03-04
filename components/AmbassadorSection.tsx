@@ -24,13 +24,13 @@ const cards = [
 
 export function AmbassadorSection() {
   return (
-    <section className="py-24 px-6 bg-[#F4F1EC]">
-      <div className="max-w-6xl mx-auto">
+    <section className="py-24 px-4 md:px-8 lg:px-12 xl:px-16 bg-[#F4F1EC]">
+      <div className="max-w-7xl mx-auto">
         <SectionReveal>
           <p className="text-[#1D2A3F] text-xs font-bold tracking-widest uppercase mb-2">
             GET INVOLVED
           </p>
-          <h2 className="font-playfair text-3xl sm:text-4xl md:text-5xl font-bold text-[#1D2A3F] mb-6">
+          <h2 className="font-playfair text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#1D2A3F] mb-6">
             Become an LTA Ambassador
           </h2>
           <p className="text-gray-600 max-w-3xl text-lg mb-12">

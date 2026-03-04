@@ -31,7 +31,7 @@ export function Navbar() {
       style={shadowStyle}
       className="sticky top-0 z-50 bg-[#F4F1EC] border-b border-border"
     >
-      <div className="w-full max-w-7xl mx-auto px-8">
+      <div className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 xl:px-16">
         <div className="flex items-center justify-between h-16">
           <Link
             href="/"
@@ -123,7 +123,7 @@ export function Navbar() {
             transition={{ duration: 0.2 }}
             className="md:hidden overflow-hidden border-t border-border bg-[#F4F1EC]"
           >
-            <nav className="px-6 lg:px-12 py-3 flex flex-col gap-0">
+            <nav className="px-4 md:px-8 lg:px-12 xl:px-16 py-3 flex flex-col gap-0">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}

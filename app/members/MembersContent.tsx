@@ -80,7 +80,12 @@ export function MembersContent() {
 
   return (
     <main className="min-h-screen bg-[#F4F1EC]">
-      <div className="max-w-3xl mx-auto px-6 py-8">
+      <div className="max-w-3xl mx-auto px-4 md:px-8 lg:px-12 xl:px-16 py-8">
+        <p className="mb-6">
+          <Link href="/" className="font-inter text-sm text-[#1D2A3F] hover:underline">
+            ← Back to home
+          </Link>
+        </p>
         <h1 className="font-playfair text-2xl sm:text-3xl font-bold text-[#1D2A3F] mb-2">
           LTA Member Directory
         </h1>

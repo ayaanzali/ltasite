@@ -90,9 +90,14 @@ export default function JoinPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#F4F1EC] py-16 px-6">
+    <main className="min-h-screen bg-[#F4F1EC] py-16 px-4 md:px-8 lg:px-12 xl:px-16">
       <div className="max-w-xl mx-auto text-center">
-        <h1 className="font-playfair text-3xl sm:text-4xl font-bold text-[#1D2A3F] mb-3">
+        <p className="text-left mb-6">
+          <Link href="/" className="font-inter text-sm text-[#1D2A3F] hover:underline">
+            ← Back to home
+          </Link>
+        </p>
+        <h1 className="font-playfair text-2xl sm:text-3xl md:text-4xl font-bold text-[#1D2A3F] mb-3">
           Become a Member
         </h1>
         <p className="text-[#1D2A3F] text-lg mb-10">
@@ -107,10 +112,10 @@ export default function JoinPage() {
             <h2 className="font-serif text-2xl font-bold mb-2">Welcome to LTA!</h2>
             <p className="text-[#1D2A3F]/90 mb-6">Check your email for next steps.</p>
             <Link
-              href="/#get-involved"
+              href="/"
               className="text-[#1D2A3F] font-medium underline hover:no-underline hover:text-[#2D5BE3]"
             >
-              ← Back to Join section
+              ← Back to home
             </Link>
           </div>
         ) : (
@@ -326,10 +331,10 @@ export default function JoinPage() {
                   {status === "loading" ? "Sending…" : "Submit"}
                 </button>
                 <Link
-                  href="/#get-involved"
+                  href="/"
                   className="text-[#1D2A3F] font-medium text-sm hover:text-[#2D5BE3] transition-colors underline hover:no-underline"
                 >
-                  ← Back to Join section
+                  ← Back to home
                 </Link>
               </div>
               <p className="text-gray-600 text-sm text-center">

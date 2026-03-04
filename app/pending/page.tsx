@@ -7,7 +7,13 @@ export default async function PendingPage() {
   const { userId } = await auth();
   if (!userId) redirect("/sign-in");
   return (
-    <main className="min-h-screen bg-[#1D2A3F] flex flex-col items-center justify-center px-6 py-12">
+    <main className="min-h-screen bg-[#1D2A3F] flex flex-col items-center justify-center px-4 md:px-8 lg:px-12 xl:px-16 py-12">
+      <Link
+        href="/"
+        className="mb-8 font-inter text-sm text-white/90 hover:text-white underline"
+      >
+        ← Back to home
+      </Link>
       <Logo
         width={80}
         height={80}
@@ -23,12 +29,6 @@ export default async function PendingPage() {
           lta.utd@gmail.com
         </a>
       </p>
-      <Link
-        href="/"
-        className="mt-10 font-inter text-sm text-white/90 hover:text-white underline"
-      >
-        ← Back to home
-      </Link>
     </main>
   );
 }

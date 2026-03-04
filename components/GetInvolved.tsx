@@ -63,9 +63,9 @@ export function GetInvolved() {
   );
   return (
     <section id="get-involved" className="bg-[#1D2A3F]">
-      <div className="max-w-3xl mx-auto px-6 lg:px-12 py-24 text-center">
+      <div className="max-w-3xl mx-auto px-4 md:px-8 lg:px-12 xl:px-16 py-24 text-center">
         <SectionReveal>
-          <h2 className="font-playfair text-3xl sm:text-4xl md:text-5xl font-bold text-[#F4F1EC] mb-6">
+          <h2 className="font-playfair text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#F4F1EC] mb-6">
             Become a Member.
           </h2>
           <p className="text-[#F4F1EC] text-lg mb-10">
@@ -82,21 +82,25 @@ export function GetInvolved() {
 
       <AmbassadorSection />
 
-      {/* Top row */}
-      <div className="grid grid-cols-2 gap-0 w-full h-[220px] sm:h-[320px] md:h-[420px] lg:h-[500px]">
-        {topRow.map(({ src, objectPosition }, i) => (
-          <div key={i} className="relative w-full h-full">
-            <PhotoTile src={src} objectPosition={objectPosition} />
-          </div>
-        ))}
+      {/* Top row — contained, uniform height, no stretch on ultrawide */}
+      <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 xl:px-16">
+        <div className="grid grid-cols-2 gap-0 w-full h-[220px] sm:h-[320px] md:h-[420px] lg:h-[500px]">
+          {topRow.map(({ src, objectPosition }, i) => (
+            <div key={i} className="relative w-full h-full">
+              <PhotoTile src={src} objectPosition={objectPosition} />
+            </div>
+          ))}
+        </div>
       </div>
-      {/* Bottom row */}
-      <div className="grid grid-cols-3 gap-0 w-full">
-        {bottomRow.map(({ src, objectPosition }, i) => (
-          <div key={i} className="relative aspect-[3/4] w-full overflow-hidden">
-            <PhotoTile src={src} objectPosition={objectPosition} />
-          </div>
-        ))}
+      {/* Bottom row — contained, uniform aspect */}
+      <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 xl:px-16">
+        <div className="grid grid-cols-3 gap-0 w-full max-w-5xl mx-auto">
+          {bottomRow.map(({ src, objectPosition }, i) => (
+            <div key={i} className="relative aspect-[3/4] w-full overflow-hidden">
+              <PhotoTile src={src} objectPosition={objectPosition} />
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
