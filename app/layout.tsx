@@ -4,6 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { ChatWidget } from "@/components/ChatWidget";
+import { WebsiteImagesProvider } from "@/hooks/useWebsiteImages";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -37,9 +38,11 @@ export default function RootLayout({
     >
       <body className="min-h-screen">
         <ClerkProvider>
-          <Navbar />
-          {children}
-          <ChatWidget />
+          <WebsiteImagesProvider>
+            <Navbar />
+            {children}
+            <ChatWidget />
+          </WebsiteImagesProvider>
         </ClerkProvider>
       </body>
     </html>

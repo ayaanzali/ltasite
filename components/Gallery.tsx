@@ -64,18 +64,9 @@ function WinnerCard({
 
 export function Gallery() {
   const { getImageUrl, images } = useWebsiteImages();
+  // Derive URLs from images so we re-render when the cache loads
   const winningImage = getImageUrl(SECTION, WINNING_TEAM.file);
   const runnerUpImage = getImageUrl(SECTION, RUNNER_UP.file);
-
-  // Debug: log what getImageUrl returns for competition cards; if null, show Airtable cache keys
-  const url1 = getImageUrl("competition-photos", "1.PNG");
-  const url2 = getImageUrl("competition-photos", "2.PNG");
-  console.log('[Gallery] getImageUrl("competition-photos", "1.PNG") =>', url1);
-  console.log('[Gallery] getImageUrl("competition-photos", "2.PNG") =>', url2);
-  if (url1 === null || url2 === null) {
-    const keys = images ? Object.keys(images) : [];
-    console.log('[Gallery] Airtable cache keys (section/name):', keys.length ? keys : '(empty or null)');
-  }
 
   return (
     <section id="gallery" className="py-24 px-4 md:px-8 lg:px-12 xl:px-16 bg-[#1D2A3F]" suppressHydrationWarning>
@@ -105,12 +96,14 @@ export function Gallery() {
         <SectionReveal>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 lg:gap-12 xl:gap-16 max-w-5xl mx-auto justify-items-center">
             <WinnerCard
+              key={winningImage ?? "winning-loading"}
               image={winningImage}
               heading={WINNING_TEAM.heading}
               name={WINNING_TEAM.name}
               initials={WINNING_TEAM.initials}
             />
             <WinnerCard
+              key={runnerUpImage ?? "runnerup-loading"}
               image={runnerUpImage}
               heading={RUNNER_UP.heading}
               name={RUNNER_UP.name}
