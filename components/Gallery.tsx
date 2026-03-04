@@ -31,7 +31,7 @@ function WinnerCard({
   return (
     <div className="flex flex-col min-w-0">
       <div
-        className="relative aspect-[4/3] min-h-[220px] rounded-lg overflow-hidden bg-white/5 p-2 sm:p-3 shadow-xl"
+        className="relative aspect-[3/4] min-h-[280px] rounded-lg overflow-hidden bg-white/5 p-2 sm:p-3 shadow-xl"
         style={{
           boxShadow: "0 0 0 1px rgba(255,255,255,0.15), 0 0 0 3px rgba(45,91,227,0.4), 0 25px 50px -12px rgba(0,0,0,0.5)",
         }}

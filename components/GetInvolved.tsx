@@ -7,18 +7,17 @@ import { SectionReveal } from "./SectionReveal";
 import { AmbassadorSection } from "./AmbassadorSection";
 import { useWebsiteImages } from "@/hooks/useWebsiteImages";
 
-const TOP_SECTION = "competition-photos";
-const BOTTOM_SECTION = "bottom-section-photos";
+const SECTION = "bottom-section-photos";
+// Top row: 2 landscape images (1.PNG, 2.PNG)
 const TOP_ROW = [
-  { name: "1.PNG", objectPosition: "center 5%" as const },
-  { name: "2.PNG", objectPosition: "80% 5%" as const },
-];
-const BOTTOM_ROW = [
   { name: "1.PNG", objectPosition: "center center" as const },
   { name: "2.PNG", objectPosition: "center center" as const },
+];
+// Bottom row: 3 portrait images (4.PNG, 5.PNG, 6.PNG)
+const BOTTOM_ROW = [
   { name: "4.PNG", objectPosition: "center center" as const },
   { name: "5.PNG", objectPosition: "center center" as const },
-  { name: "6.PNG", objectPosition: "35% 25%" as const },
+  { name: "6.PNG", objectPosition: "center center" as const },
 ];
 
 function PhotoTile({
@@ -57,11 +56,11 @@ function PhotoTile({
 export function GetInvolved() {
   const { getImageUrl } = useWebsiteImages();
   const topRow = useMemo(
-    () => TOP_ROW.map(({ name, objectPosition }) => ({ src: getImageUrl(TOP_SECTION, name), objectPosition })),
+    () => TOP_ROW.map(({ name, objectPosition }) => ({ src: getImageUrl(SECTION, name), objectPosition })),
     [getImageUrl]
   );
   const bottomRow = useMemo(
-    () => BOTTOM_ROW.map(({ name, objectPosition }) => ({ src: getImageUrl(BOTTOM_SECTION, name), objectPosition })),
+    () => BOTTOM_ROW.map(({ name, objectPosition }) => ({ src: getImageUrl(SECTION, name), objectPosition })),
     [getImageUrl]
   );
   return (
@@ -85,16 +84,15 @@ export function GetInvolved() {
 
       <AmbassadorSection />
 
-      {/* Top row */}
-      <div className="grid grid-cols-2 gap-0 w-full h-[220px] sm:h-[320px] md:h-[420px] lg:h-[500px]">
+      {/* 2x3 grid: top 2 landscape, bottom 3 portrait */}
+      <div className="grid grid-cols-2 gap-0 w-full">
         {topRow.map(({ src, objectPosition }, i) => (
-          <div key={i} className="relative w-full h-full">
+          <div key={i} className="relative aspect-[16/9] w-full overflow-hidden">
             <PhotoTile src={src} objectPosition={objectPosition} />
           </div>
         ))}
       </div>
-      {/* Bottom row */}
-      <div className="grid grid-cols-5 gap-0 w-full">
+      <div className="grid grid-cols-3 gap-0 w-full">
         {bottomRow.map(({ src, objectPosition }, i) => (
           <div key={i} className="relative aspect-[3/4] w-full overflow-hidden">
             <PhotoTile src={src} objectPosition={objectPosition} />
