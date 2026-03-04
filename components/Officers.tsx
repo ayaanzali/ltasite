@@ -45,7 +45,7 @@ function splitName(fullName: string): { first: string; last: string } {
   return { first, last };
 }
 
-function OfficerCard({ officer, delay }: { officer: Officer & { imageUrl?: string }; delay: number }) {
+function OfficerCard({ officer, delay }: { officer: Officer & { imageUrl?: string | null }; delay: number }) {
   const [imgError, setImgError] = useState(false);
   const Wrapper = officer.linkedInUrl ? motion.a : motion.div;
   const wrapperProps = officer.linkedInUrl

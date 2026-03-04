@@ -27,10 +27,12 @@ const slideVariants = {
   }),
 };
 
-function HeroSlider({ images }: { images: string[] }) {
+type Slide = { url: string | null; label: string };
+function HeroSlider({ slides }: { slides: Slide[] }) {
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [imgErrors, setImgErrors] = useState<Record<number, boolean>>({});
 
   const goTo = useCallback((next: number) => {
     setDirection(next > index ? 1 : -1);
@@ -38,20 +40,20 @@ function HeroSlider({ images }: { images: string[] }) {
   }, [index]);
 
   const next = useCallback(() => {
-    if (images.length === 0) return;
-    goTo((index + 1) % images.length);
-  }, [index, goTo, images.length]);
+    if (slides.length === 0) return;
+    goTo((index + 1) % slides.length);
+  }, [index, goTo, slides.length]);
 
   const prev = useCallback(() => {
-    if (images.length === 0) return;
-    goTo((index - 1 + images.length) % images.length);
-  }, [index, goTo, images.length]);
+    if (slides.length === 0) return;
+    goTo((index - 1 + slides.length) % slides.length);
+  }, [index, goTo, slides.length]);
 
   useEffect(() => {
-    if (isPaused || images.length === 0) return;
+    if (isPaused || slides.length === 0) return;
     const t = setInterval(next, 4000);
     return () => clearInterval(t);
-  }, [isPaused, next, images.length]);
+  }, [isPaused, next, slides.length]);
 
   return (
     <div
@@ -63,7 +65,7 @@ function HeroSlider({ images }: { images: string[] }) {
       {/* Image wrapper: overflow hidden, arrows inside — responsive height for mobile */}
       <div className="relative w-full max-w-[600px] h-[240px] sm:h-[300px] md:h-[380px] lg:h-[420px] overflow-hidden rounded-lg">
         <AnimatePresence initial={false} custom={direction} mode="wait">
-          {images.length > 0 && (
+          {slides.length > 0 && (
             <motion.div
               key={index}
               custom={direction}
@@ -74,18 +76,25 @@ function HeroSlider({ images }: { images: string[] }) {
               transition={{ type: "tween", duration: 0.35 }}
               className="absolute inset-0"
             >
-              <Image
-                src={images[index]}
-                alt={`Photo ${index + 1}`}
-                fill
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
-                loading={index === 0 ? "eager" : "lazy"}
-                priority={index === 0}
-                quality={70}
-                placeholder="blur"
-                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAAIAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAUH/8QAIhAAAgEDBAMBAAAAAAAAAAAAAQIDAAQRBRIhMQYTQVFh/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAZEQACAwEAAAAAAAAAAAAAAAABAgADESH/2gAMAwEAAhEDEEA/ALWn6hqFjZxW1rdzQwxrtREcgKPgUUUUH//Z"
-                className="object-cover object-center"
-              />
+              {slides[index].url && !imgErrors[index] ? (
+                <Image
+                  src={slides[index].url!}
+                  alt={`Photo ${index + 1}`}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
+                  loading={index === 0 ? "eager" : "lazy"}
+                  priority={index === 0}
+                  quality={70}
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAAIAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAUH/8QAIhAAAgEDBAMBAAAAAAAAAAAAAQIDAAQRBRIhMQYTQVFh/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAZEQACAwEAAAAAAAAAAAAAAAABAgADESH/2gAMAwEAAhEDEEA/ALWn6hqFjZxW1rdzQwxrtREcgKPgUUUUH//Z"
+                  className="object-cover object-center"
+                  onError={() => setImgErrors((p) => ({ ...p, [index]: true }))}
+                />
+              ) : (
+                <div className="absolute inset-0 bg-[#1D2A3F] flex items-center justify-center">
+                  <span className="text-white font-semibold text-2xl">{slides[index].label}</span>
+                </div>
+              )}
             </motion.div>
           )}
         </AnimatePresence>
@@ -116,9 +125,9 @@ function HeroSlider({ images }: { images: string[] }) {
       </div>
 
       {/* Dots - centered below image, margin-top 12px */}
-      {images.length > 0 && (
+      {slides.length > 0 && (
         <div className="flex items-center justify-center gap-2 mt-3" suppressHydrationWarning>
-          {images.map((_, i) => (
+          {slides.map((_, i) => (
             <button
               key={i}
               type="button"
@@ -139,8 +148,12 @@ function HeroSlider({ images }: { images: string[] }) {
 
 export function Hero() {
   const { getImageUrl } = useWebsiteImages();
-  const carouselImages = useMemo(
-    () => CAROUSEL_FILES.map((name) => getImageUrl(SECTION, name)),
+  const carouselSlides = useMemo(
+    () =>
+      CAROUSEL_FILES.map((name, i) => ({
+        url: getImageUrl(SECTION, name),
+        label: String(i + 1),
+      })),
     [getImageUrl]
   );
 
@@ -217,7 +230,7 @@ export function Hero() {
 
       {/* Right column: carousel — 55% width, generous spacing from buttons on mobile */}
       <div className="relative z-10 flex flex-col items-center justify-center w-full md:w-[55%] shrink-0">
-        <HeroSlider images={carouselImages} />
+        <HeroSlider slides={carouselSlides} />
       </div>
     </section>
   );

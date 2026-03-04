@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useMemo } from "react";
+import { useState, useMemo } from "react";
 import { SectionReveal } from "./SectionReveal";
 import { AmbassadorSection } from "./AmbassadorSection";
 import { useWebsiteImages } from "@/hooks/useWebsiteImages";
@@ -17,6 +17,39 @@ const BOTTOM_ROW = [
   { name: "5.PNG", objectPosition: "center center" as const },
   { name: "6.PNG", objectPosition: "35% 25%" as const },
 ];
+
+function PhotoTile({
+  src,
+  objectPosition,
+  placeholder = "LTA",
+}: {
+  src: string | null;
+  objectPosition: string;
+  placeholder?: string;
+}) {
+  const [imgError, setImgError] = useState(false);
+  const showPlaceholder = !src || imgError;
+  return (
+    <div className="relative w-full h-full overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
+      {showPlaceholder ? (
+        <div className="absolute inset-0 bg-[#1D2A3F] flex items-center justify-center">
+          <span className="text-white/60 font-semibold text-xl">{placeholder}</span>
+        </div>
+      ) : (
+        <Image
+          src={src}
+          alt=""
+          fill
+          sizes="50vw"
+          loading="lazy"
+          className="object-cover"
+          style={{ objectPosition }}
+          onError={() => setImgError(true)}
+        />
+      )}
+    </div>
+  );
+}
 
 export function GetInvolved() {
   const { getImageUrl } = useWebsiteImages();
@@ -51,33 +84,17 @@ export function GetInvolved() {
 
       {/* Top row */}
       <div className="grid grid-cols-2 gap-0 w-full h-[220px] sm:h-[320px] md:h-[420px] lg:h-[500px]">
-        {topRow.map(({ src, objectPosition }) => (
-          <div key={src} className="relative overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
-            <Image
-              src={src}
-              alt=""
-              fill
-              sizes="50vw"
-              loading="lazy"
-              className="object-cover"
-              style={{ objectPosition }}
-            />
+        {topRow.map(({ src, objectPosition }, i) => (
+          <div key={i} className="relative w-full h-full">
+            <PhotoTile src={src} objectPosition={objectPosition} />
           </div>
         ))}
       </div>
       {/* Bottom row */}
       <div className="grid grid-cols-3 gap-0 w-full">
-        {bottomRow.map(({ src, objectPosition }) => (
-          <div key={src} className="relative aspect-[3/4] overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
-            <Image
-              src={src}
-              alt=""
-              fill
-              sizes="(max-width: 768px) 33vw, 33vw"
-              loading="lazy"
-              className="object-cover"
-              style={{ objectPosition }}
-            />
+        {bottomRow.map(({ src, objectPosition }, i) => (
+          <div key={i} className="relative aspect-[3/4] w-full overflow-hidden">
+            <PhotoTile src={src} objectPosition={objectPosition} />
           </div>
         ))}
       </div>

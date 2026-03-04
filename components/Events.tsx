@@ -73,6 +73,28 @@ function formatEventDate(isoString: string): string {
   }
 }
 
+function EventImage({ imageUrl, eventName }: { imageUrl?: string; eventName: string }) {
+  const [imgError, setImgError] = useState(false);
+  const initials = eventName.split(/\s+/).map((n) => n[0]).join("").slice(0, 2).toUpperCase() || "LTA";
+  const showPlaceholder = !imageUrl || imgError;
+  return (
+    <div className="relative w-full h-[220px] bg-[#1D2A3F] shrink-0 overflow-hidden">
+      {showPlaceholder ? (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-white/60 font-semibold text-2xl">{initials}</span>
+        </div>
+      ) : (
+        <img
+          src={imageUrl}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover"
+          onError={() => setImgError(true)}
+        />
+      )}
+    </div>
+  );
+}
+
 function SkeletonCard() {
   return (
     <div className="h-full flex flex-col rounded-lg bg-white border border-gray-200 shadow-sm overflow-hidden animate-pulse">
@@ -140,23 +162,7 @@ export function Events() {
                   className="h-full flex flex-col rounded-lg bg-white border border-gray-200 shadow-sm overflow-hidden hover:border-blue-600/30 transition-colors duration-200"
                 >
                   {/* Image */}
-                  <div className="relative w-full h-[220px] bg-[#1D2A3F] shrink-0 overflow-hidden">
-                    {event.imageUrl ? (
-                      <img
-                        src={event.imageUrl}
-                        alt=""
-                        className="absolute inset-0 w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="absolute inset-0 flex items-center justify-center bg-[#1D2A3F]">
-                        <Logo
-                          width={80}
-                          height={80}
-                          className="opacity-40"
-                        />
-                      </div>
-                    )}
-                  </div>
+                  <EventImage imageUrl={event.imageUrl} eventName={event.name} />
 
                   <div className="p-6 flex flex-col flex-1 min-h-0">
                     {/* Date */}

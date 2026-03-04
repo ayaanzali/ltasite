@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { SectionReveal } from "./SectionReveal";
 import { useWebsiteImages } from "@/hooks/useWebsiteImages";
@@ -12,18 +12,22 @@ const stats = [
 ];
 
 const SECTION = "competition-photos";
-const WINNING_TEAM = { file: "1.JPG", heading: "Winning Team", name: "Dorsa Zilaee, Likhit Kadiam, Rashmi Ravindran" };
-const RUNNER_UP = { file: "2.JPG", heading: "Runner Up", name: "Khadijah Khalid, Aadharshini Thangapandian" };
+const WINNING_TEAM = { file: "1.JPG", heading: "Winning Team", name: "Dorsa Zilaee, Likhit Kadiam, Rashmi Ravindran", initials: "WT" };
+const RUNNER_UP = { file: "2.JPG", heading: "Runner Up", name: "Khadijah Khalid, Aadharshini Thangapandian", initials: "RU" };
 
 function WinnerCard({
   image,
   heading,
   name,
+  initials,
 }: {
-  image: string;
+  image: string | null;
   heading: string;
   name: string;
+  initials: string;
 }) {
+  const [imgError, setImgError] = useState(false);
+  const showPlaceholder = !image || imgError;
   return (
     <div className="flex flex-col min-w-0">
       <div
@@ -32,15 +36,22 @@ function WinnerCard({
           boxShadow: "0 0 0 1px rgba(255,255,255,0.15), 0 0 0 3px rgba(45,91,227,0.4), 0 25px 50px -12px rgba(0,0,0,0.5)",
         }}
       >
-        <div className="absolute inset-2 sm:inset-3 rounded-md overflow-hidden ring-1 ring-white/20 relative">
-          <Image
-            src={image}
-            alt={name}
-            fill
-            sizes="(max-width: 768px) 100vw, 50vw"
-            loading="lazy"
-            className="object-cover object-center"
-          />
+        <div className="absolute inset-2 sm:inset-3 rounded-md overflow-hidden ring-1 ring-white/20 relative bg-[#1D2A3F]">
+          {showPlaceholder ? (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-white font-semibold text-2xl">{initials}</span>
+            </div>
+          ) : (
+            <Image
+              src={image}
+              alt={name}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              loading="lazy"
+              className="object-cover object-center"
+              onError={() => setImgError(true)}
+            />
+          )}
         </div>
       </div>
       <h3 className="mt-4 font-serif text-xl sm:text-2xl font-bold text-white">
@@ -87,11 +98,13 @@ export function Gallery() {
               image={winningImage}
               heading={WINNING_TEAM.heading}
               name={WINNING_TEAM.name}
+              initials={WINNING_TEAM.initials}
             />
             <WinnerCard
               image={runnerUpImage}
               heading={RUNNER_UP.heading}
               name={RUNNER_UP.name}
+              initials={RUNNER_UP.initials}
             />
           </div>
         </SectionReveal>

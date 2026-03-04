@@ -28,9 +28,8 @@ function buildKey(section: string, name: string): string {
   return section ? `${section}/${name}` : name;
 }
 
-function fallbackPath(section: string, name: string): string {
-  return section ? `/${section}/${name}` : `/${name}`;
-}
+/** Logo is the only image kept in public; use it when Airtable has no logo record */
+const LOGO_FALLBACK = "/lta-logo.png";
 
 /** Strip extension from filename (e.g. "1.JPG" -> "1", "lta-logo.png" -> "lta-logo") */
 function getBaseName(name: string): string {
@@ -111,14 +110,19 @@ export async function fetchWebsiteImages(): Promise<ImageMap> {
 
 /**
  * Returns the Airtable attachment URL for the given section (folder) and name (filename).
- * Lookup is case-insensitive and extension-agnostic: matches by base name (e.g. "1.JPG"
- * finds "1.PNG"). Falls back to local path if not found in Airtable.
+ * Lookup is case-insensitive and extension-agnostic. Returns null when not found, except
+ * for the logo which falls back to /lta-logo.png. Callers should show initials placeholder when null.
  */
-export function getImageUrl(images: ImageMap | null, section: string, name: string): string {
-  if (!images) return fallbackPath(section, name);
+export function getImageUrl(images: ImageMap | null, section: string, name: string): string | null {
+  if (!images) {
+    if (!section && name === "lta-logo.png") return LOGO_FALLBACK;
+    return null;
+  }
   const exactKey = buildKey(section, name);
   const exact = images[exactKey];
   if (exact) return exact;
   const byBase = findByBaseName(images, section, name);
-  return byBase ?? fallbackPath(section, name);
+  if (byBase) return byBase;
+  if (!section && name === "lta-logo.png") return LOGO_FALLBACK;
+  return null;
 }
