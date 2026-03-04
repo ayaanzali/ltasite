@@ -7,12 +7,15 @@ import { SectionReveal } from "./SectionReveal";
 import { AmbassadorSection } from "./AmbassadorSection";
 import { useWebsiteImages } from "@/hooks/useWebsiteImages";
 
-const SECTION = "bottom-section-photos";
+const TOP_SECTION = "competition-photos";
+const BOTTOM_SECTION = "bottom-section-photos";
 const TOP_ROW = [
   { name: "1.PNG", objectPosition: "center 5%" as const },
   { name: "2.PNG", objectPosition: "80% 5%" as const },
 ];
 const BOTTOM_ROW = [
+  { name: "1.PNG", objectPosition: "center center" as const },
+  { name: "2.PNG", objectPosition: "center center" as const },
   { name: "4.PNG", objectPosition: "center center" as const },
   { name: "5.PNG", objectPosition: "center center" as const },
   { name: "6.PNG", objectPosition: "35% 25%" as const },
@@ -54,11 +57,11 @@ function PhotoTile({
 export function GetInvolved() {
   const { getImageUrl } = useWebsiteImages();
   const topRow = useMemo(
-    () => TOP_ROW.map(({ name, objectPosition }) => ({ src: getImageUrl(SECTION, name), objectPosition })),
+    () => TOP_ROW.map(({ name, objectPosition }) => ({ src: getImageUrl(TOP_SECTION, name), objectPosition })),
     [getImageUrl]
   );
   const bottomRow = useMemo(
-    () => BOTTOM_ROW.map(({ name, objectPosition }) => ({ src: getImageUrl(SECTION, name), objectPosition })),
+    () => BOTTOM_ROW.map(({ name, objectPosition }) => ({ src: getImageUrl(BOTTOM_SECTION, name), objectPosition })),
     [getImageUrl]
   );
   return (
@@ -91,7 +94,7 @@ export function GetInvolved() {
         ))}
       </div>
       {/* Bottom row */}
-      <div className="grid grid-cols-3 gap-0 w-full">
+      <div className="grid grid-cols-5 gap-0 w-full">
         {bottomRow.map(({ src, objectPosition }, i) => (
           <div key={i} className="relative aspect-[3/4] w-full overflow-hidden">
             <PhotoTile src={src} objectPosition={objectPosition} />
