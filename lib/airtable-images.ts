@@ -9,15 +9,17 @@
 
 const Airtable = require("airtable");
 
+/** Exact env var names read at runtime - must match Vercel: AIRTABLE_API_KEY, AIRTABLE_IMAGES_BASE_ID, AIRTABLE_IMAGES_TABLE_ID */
 const API_KEY = process.env.AIRTABLE_API_KEY ?? "";
 const IMAGES_BASE_ID = process.env.AIRTABLE_IMAGES_BASE_ID ?? "appcpycTwtluUN3Fq";
 const IMAGES_TABLE_ID = process.env.AIRTABLE_IMAGES_TABLE_ID ?? "tblOMpFxnkRwxfuEE";
 
-function logApiKeyStatus() {
-  const raw = process.env.AIRTABLE_API_KEY;
-  const status = raw ? `set (length: ${raw.length})` : "empty or undefined";
-  console.log("[airtable-images] AIRTABLE_API_KEY:", status);
-  console.log("[airtable-images] IMAGES_BASE_ID:", IMAGES_BASE_ID, "| IMAGES_TABLE_ID:", IMAGES_TABLE_ID);
+function logEnvVars() {
+  console.log("[airtable-images] Env vars read: AIRTABLE_API_KEY, AIRTABLE_IMAGES_BASE_ID, AIRTABLE_IMAGES_TABLE_ID");
+  console.log("[airtable-images] AIRTABLE_API_KEY:", process.env.AIRTABLE_API_KEY ? `set (length=${process.env.AIRTABLE_API_KEY.length})` : "empty/undefined");
+  console.log("[airtable-images] AIRTABLE_IMAGES_BASE_ID:", process.env.AIRTABLE_IMAGES_BASE_ID ? `set (${process.env.AIRTABLE_IMAGES_BASE_ID})` : "empty/undefined, using default");
+  console.log("[airtable-images] AIRTABLE_IMAGES_TABLE_ID:", process.env.AIRTABLE_IMAGES_TABLE_ID ? `set (${process.env.AIRTABLE_IMAGES_TABLE_ID})` : "empty/undefined, using default");
+  console.log("[airtable-images] Resolved: baseId=", IMAGES_BASE_ID, "tableId=", IMAGES_TABLE_ID);
 }
 
 type ImageMap = Record<string, string>;
@@ -57,7 +59,7 @@ function findByBaseName(images: ImageMap, section: string, name: string): string
 }
 
 export async function fetchWebsiteImages(): Promise<ImageMap> {
-  logApiKeyStatus();
+  logEnvVars();
   if (cachedImages) return cachedImages;
   if (!API_KEY) {
     console.log("[airtable-images] Skipping fetch: AIRTABLE_API_KEY is empty");
