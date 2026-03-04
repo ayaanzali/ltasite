@@ -32,9 +32,9 @@ function WinnerCard({
   }, [image]);
   const showPlaceholder = !image || imgError;
   return (
-    <div className="flex flex-col min-w-0">
+    <div className="flex flex-col min-w-0 w-full text-center">
       <div
-        className="relative aspect-[3/4] min-h-[280px] rounded-lg overflow-hidden bg-white/5 p-2 sm:p-3 shadow-xl"
+        className="relative aspect-[16/9] rounded-lg overflow-hidden bg-white/5 p-2 sm:p-3 shadow-xl"
         style={{
           boxShadow: "0 0 0 1px rgba(255,255,255,0.15), 0 0 0 3px rgba(45,91,227,0.4), 0 25px 50px -12px rgba(0,0,0,0.5)",
         }}
@@ -52,7 +52,7 @@ function WinnerCard({
               sizes="(max-width: 768px) 100vw, 50vw"
               loading="lazy"
               className="object-cover"
-              style={{ objectPosition: "center center" }}
+              style={{ objectPosition: "center 20%" }}
               onError={() => setImgError(true)}
             />
           )}
@@ -100,7 +100,7 @@ export function Gallery() {
         </SectionReveal>
 
         <SectionReveal>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 lg:gap-12 xl:gap-16 max-w-5xl mx-auto justify-items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto justify-items-center items-start">
             <WinnerCard
               key="winning"
               image={winningImage}
