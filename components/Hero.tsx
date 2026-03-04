@@ -9,12 +9,8 @@ import { useWebsiteImages } from "@/hooks/useWebsiteImages";
 const headline = "Where Future Advocates Build Their Case.";
 const words = headline.split(" ");
 
-const FALLBACK_CAROUSEL = [
-  "/starting-photos/1.JPG", "/starting-photos/2.JPG", "/starting-photos/3.JPG",
-  "/starting-photos/4.JPG", "/starting-photos/5.JPG", "/starting-photos/6.JPG",
-  "/starting-photos/7.JPG", "/starting-photos/8.JPG", "/starting-photos/9.JPG",
-  "/starting-photos/10.JPG", "/starting-photos/11.JPG", "/starting-photos/12.JPG",
-];
+const CAROUSEL_FILES = ["1.JPG", "2.JPG", "3.JPG", "4.JPG", "5.JPG", "6.JPG", "7.JPG", "8.JPG", "9.JPG", "10.JPG", "11.JPG", "12.JPG"];
+const SECTION = "starting-photos";
 
 const slideVariants = {
   enter: (direction: number) => ({
@@ -142,15 +138,11 @@ function HeroSlider({ images }: { images: string[] }) {
 }
 
 export function Hero() {
-  const img = useWebsiteImages();
-  const carouselImages = useMemo(() => {
-    if (!img) return FALLBACK_CAROUSEL;
-    const arr = [
-      img.Hero1, img.Hero2, img.Hero3, img.Hero4, img.Hero5, img.Hero6,
-      img.Hero7, img.Hero8, img.Hero9, img.Hero10, img.Hero11, img.Hero12,
-    ].filter(Boolean) as string[];
-    return arr.length > 0 ? arr : FALLBACK_CAROUSEL;
-  }, [img]);
+  const { getImageUrl } = useWebsiteImages();
+  const carouselImages = useMemo(
+    () => CAROUSEL_FILES.map((name) => getImageUrl(SECTION, name)),
+    [getImageUrl]
+  );
 
   return (
     <section

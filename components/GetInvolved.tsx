@@ -7,33 +7,27 @@ import { SectionReveal } from "./SectionReveal";
 import { AmbassadorSection } from "./AmbassadorSection";
 import { useWebsiteImages } from "@/hooks/useWebsiteImages";
 
-const FALLBACK_TOP = [
-  { src: "/bottom-section-photos/1.PNG", objectPosition: "center 5%" as const },
-  { src: "/bottom-section-photos/2.PNG", objectPosition: "80% 5%" as const },
+const SECTION = "bottom-section-photos";
+const TOP_ROW = [
+  { name: "1.PNG", objectPosition: "center 5%" as const },
+  { name: "2.PNG", objectPosition: "80% 5%" as const },
 ];
-const FALLBACK_BOTTOM = [
-  { src: "/bottom-section-photos/4.PNG", objectPosition: "center center" as const },
-  { src: "/bottom-section-photos/5.PNG", objectPosition: "center center" as const },
-  { src: "/bottom-section-photos/6.PNG", objectPosition: "35% 25%" as const },
+const BOTTOM_ROW = [
+  { name: "4.PNG", objectPosition: "center center" as const },
+  { name: "5.PNG", objectPosition: "center center" as const },
+  { name: "6.PNG", objectPosition: "35% 25%" as const },
 ];
 
 export function GetInvolved() {
-  const img = useWebsiteImages();
-  const topRow = useMemo(() => {
-    if (!img?.Bottom1 || !img?.Bottom2) return FALLBACK_TOP;
-    return [
-      { src: img.Bottom1, objectPosition: "center 5%" as const },
-      { src: img.Bottom2, objectPosition: "80% 5%" as const },
-    ];
-  }, [img]);
-  const bottomRow = useMemo(() => {
-    if (!img?.Bottom3 || !img?.Bottom4 || !img?.Bottom5) return FALLBACK_BOTTOM;
-    return [
-      { src: img.Bottom3, objectPosition: "center center" as const },
-      { src: img.Bottom4, objectPosition: "center center" as const },
-      { src: img.Bottom5, objectPosition: "35% 25%" as const },
-    ];
-  }, [img]);
+  const { getImageUrl } = useWebsiteImages();
+  const topRow = useMemo(
+    () => TOP_ROW.map(({ name, objectPosition }) => ({ src: getImageUrl(SECTION, name), objectPosition })),
+    [getImageUrl]
+  );
+  const bottomRow = useMemo(
+    () => BOTTOM_ROW.map(({ name, objectPosition }) => ({ src: getImageUrl(SECTION, name), objectPosition })),
+    [getImageUrl]
+  );
   return (
     <section id="get-involved" className="bg-[#1D2A3F]">
       <div className="max-w-3xl mx-auto px-6 lg:px-12 py-24 text-center">

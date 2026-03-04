@@ -1,85 +1,73 @@
 /**
- * Fetch website images from Airtable "Website Images" base.
- * Set AIRTABLE_IMAGES_BASE_ID in .env.local (can use same AIRTABLE_API_KEY).
+ * Fetch website images from Airtable. Uses Section (folder) + Name (filename) to map
+ * to local paths like /images/Ayaan.JPG or /competition-photos/1.JPG.
  *
- * Table: "Images" with columns: Name (text), Image (attachment)
- * Records: Hero1..Hero12, Bottom1..Bottom5, Gallery1, Gallery2, OfficerAyaan, etc., Logo
+ * Table: Name, Section, Picture (attachment)
+ * Base ID: appcpycTwtluUN3Fq
+ * Table ID: tblOMpFxnkRwxfuEE
  */
 
 const Airtable = require("airtable");
 
 const API_KEY = process.env.AIRTABLE_API_KEY ?? "";
-const IMAGES_BASE_ID = process.env.AIRTABLE_IMAGES_BASE_ID ?? "";
+const IMAGES_BASE_ID = process.env.AIRTABLE_IMAGES_BASE_ID ?? "appcpycTwtluUN3Fq";
+const IMAGES_TABLE_ID = process.env.AIRTABLE_IMAGES_TABLE_ID ?? "tblOMpFxnkRwxfuEE";
 
-export type WebsiteImages = {
-  Hero1?: string;
-  Hero2?: string;
-  Hero3?: string;
-  Hero4?: string;
-  Hero5?: string;
-  Hero6?: string;
-  Hero7?: string;
-  Hero8?: string;
-  Hero9?: string;
-  Hero10?: string;
-  Hero11?: string;
-  Hero12?: string;
-  Bottom1?: string;
-  Bottom2?: string;
-  Bottom3?: string;
-  Bottom4?: string;
-  Bottom5?: string;
-  Gallery1?: string;
-  Gallery2?: string;
-  OfficerAyaan?: string;
-  OfficerRam?: string;
-  OfficerTanisha?: string;
-  OfficerAishah?: string;
-  OfficerNethra?: string;
-  OfficerAafiya?: string;
-  OfficerNeha?: string;
-  OfficerKhadijah?: string;
-  Logo?: string;
-};
+function logApiKeyStatus() {
+  const raw = process.env.AIRTABLE_API_KEY;
+  const status = raw ? `set (length: ${raw.length})` : "empty or undefined";
+  console.log("[airtable-images] AIRTABLE_API_KEY:", status);
+  console.log("[airtable-images] IMAGES_BASE_ID:", IMAGES_BASE_ID, "| IMAGES_TABLE_ID:", IMAGES_TABLE_ID);
+}
 
-const FALLBACK: WebsiteImages = {
-  Hero1: "/starting-photos/1.JPG",
-  Hero2: "/starting-photos/2.JPG",
-  Hero3: "/starting-photos/3.JPG",
-  Hero4: "/starting-photos/4.JPG",
-  Hero5: "/starting-photos/5.JPG",
-  Hero6: "/starting-photos/6.JPG",
-  Hero7: "/starting-photos/7.JPG",
-  Hero8: "/starting-photos/8.JPG",
-  Hero9: "/starting-photos/9.JPG",
-  Hero10: "/starting-photos/10.JPG",
-  Hero11: "/starting-photos/11.JPG",
-  Hero12: "/starting-photos/12.JPG",
-  Bottom1: "/bottom-section-photos/1.PNG",
-  Bottom2: "/bottom-section-photos/2.PNG",
-  Bottom3: "/bottom-section-photos/4.PNG",
-  Bottom4: "/bottom-section-photos/5.PNG",
-  Bottom5: "/bottom-section-photos/6.PNG",
-  Gallery1: "/competition-photos/1.JPG",
-  Gallery2: "/competition-photos/2.JPG",
-  OfficerAyaan: "/images/Ayaan.JPG",
-  OfficerRam: "/images/Ram.JPG",
-  OfficerTanisha: "/images/Tanisha.JPG",
-  OfficerAishah: "/images/Aishah.png",
-  OfficerNethra: "/images/Nethra.JPG",
-  OfficerAafiya: "/images/Aafiya.png",
-  OfficerNeha: "/images/Neha.JPG",
-  OfficerKhadijah: "/images/Khadijah.JPG",
-  Logo: "/lta-logo.png",
-};
+type ImageMap = Record<string, string>;
 
-export async function fetchWebsiteImages(): Promise<WebsiteImages> {
-  if (!API_KEY || !IMAGES_BASE_ID) {
-    return FALLBACK;
+let cachedImages: ImageMap | null = null;
+
+function buildKey(section: string, name: string): string {
+  return section ? `${section}/${name}` : name;
+}
+
+function fallbackPath(section: string, name: string): string {
+  return section ? `/${section}/${name}` : `/${name}`;
+}
+
+/** Strip extension from filename (e.g. "1.JPG" -> "1", "lta-logo.png" -> "lta-logo") */
+function getBaseName(name: string): string {
+  return name.replace(/\.[^/.]+$/, "");
+}
+
+/** Parse stored key into section and name */
+function parseKey(key: string): { section: string; name: string } {
+  const i = key.indexOf("/");
+  if (i === -1) return { section: "", name: key };
+  return { section: key.slice(0, i), name: key.slice(i + 1) };
+}
+
+/** Find URL by section + base name (extension-agnostic, case-insensitive) */
+function findByBaseName(images: ImageMap, section: string, name: string): string | undefined {
+  const reqSectionNorm = section.trim().toLowerCase();
+  const reqBaseNorm = getBaseName(name).toLowerCase();
+  if (!reqBaseNorm) return undefined;
+  for (const [key, url] of Object.entries(images)) {
+    const { section: s, name: n } = parseKey(key);
+    if (s.toLowerCase() !== reqSectionNorm) continue;
+    if (getBaseName(n).toLowerCase() === reqBaseNorm) return url;
+  }
+  return undefined;
+}
+
+export async function fetchWebsiteImages(): Promise<ImageMap> {
+  logApiKeyStatus();
+  if (cachedImages) return cachedImages;
+  if (!API_KEY) {
+    console.log("[airtable-images] Skipping fetch: AIRTABLE_API_KEY is empty");
+    cachedImages = {};
+    return cachedImages;
   }
   try {
     const base = new Airtable({ apiKey: API_KEY }).base(IMAGES_BASE_ID);
-    const table = base("Images") as {
+    const table = base(IMAGES_TABLE_ID) as {
       select: () => { eachPage: (page: (r: AirtableRecord[], fn: () => void) => void, done: (err?: Error) => void) => void };
     };
     type AirtableRecord = { get: (f: string) => unknown; fields: Record<string, unknown> };
@@ -95,24 +83,42 @@ export async function fetchWebsiteImages(): Promise<WebsiteImages> {
           (err) => {
             if (err) {
               console.error("[airtable-images] fetch error:", err);
-              resolve(FALLBACK);
+              cachedImages = {};
+              resolve(cachedImages);
               return;
             }
-            const result: WebsiteImages = { ...FALLBACK };
+            const result: ImageMap = {};
             for (const r of all) {
-              const name = (r.get("Name") as string) ?? (r.fields["Name"] as string);
-              const attachment = (r.fields["Image"] as Array<{ url?: string }>) ?? (r.get("Image") as Array<{ url?: string }>);
-                const url = (Array.isArray(attachment) ? attachment[0] : undefined)?.url;
+              const section = String((r.get("Section") as string) ?? (r.fields["Section"] as string) ?? "").trim();
+              const name = String((r.get("Name") as string) ?? (r.fields["Name"] as string) ?? "").trim();
+              const picture = (r.fields["Picture"] as Array<{ url?: string }>) ?? (r.get("Picture") as Array<{ url?: string }>);
+              const url = (Array.isArray(picture) ? picture[0] : undefined)?.url;
               if (name && url) {
-                (result as Record<string, string>)[name] = url;
+                result[buildKey(section, name)] = url;
               }
             }
+            cachedImages = result;
             resolve(result);
           }
         );
     });
   } catch (e) {
     console.error("[airtable-images] error:", e);
-    return FALLBACK;
+    cachedImages = {};
+    return cachedImages;
   }
+}
+
+/**
+ * Returns the Airtable attachment URL for the given section (folder) and name (filename).
+ * Lookup is case-insensitive and extension-agnostic: matches by base name (e.g. "1.JPG"
+ * finds "1.PNG"). Falls back to local path if not found in Airtable.
+ */
+export function getImageUrl(images: ImageMap | null, section: string, name: string): string {
+  if (!images) return fallbackPath(section, name);
+  const exactKey = buildKey(section, name);
+  const exact = images[exactKey];
+  if (exact) return exact;
+  const byBase = findByBaseName(images, section, name);
+  return byBase ?? fallbackPath(section, name);
 }

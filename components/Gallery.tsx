@@ -11,17 +11,9 @@ const stats = [
   "December 2025",
 ];
 
-const WINNING_TEAM = {
-  fallback: "/competition-photos/1.JPG",
-  heading: "Winning Team",
-  name: "Dorsa Zilaee, Likhit Kadiam, Rashmi Ravindran",
-};
-
-const RUNNER_UP = {
-  fallback: "/competition-photos/2.JPG",
-  heading: "Runner Up",
-  name: "Khadijah Khalid, Aadharshini Thangapandian",
-};
+const SECTION = "competition-photos";
+const WINNING_TEAM = { file: "1.JPG", heading: "Winning Team", name: "Dorsa Zilaee, Likhit Kadiam, Rashmi Ravindran" };
+const RUNNER_UP = { file: "2.JPG", heading: "Runner Up", name: "Khadijah Khalid, Aadharshini Thangapandian" };
 
 function WinnerCard({
   image,
@@ -60,9 +52,9 @@ function WinnerCard({
 }
 
 export function Gallery() {
-  const img = useWebsiteImages();
-  const winningImage = img?.Gallery1 ?? WINNING_TEAM.fallback;
-  const runnerUpImage = img?.Gallery2 ?? RUNNER_UP.fallback;
+  const { getImageUrl } = useWebsiteImages();
+  const winningImage = getImageUrl(SECTION, WINNING_TEAM.file);
+  const runnerUpImage = getImageUrl(SECTION, RUNNER_UP.file);
 
   return (
     <section id="gallery" className="py-24 px-6 bg-[#1D2A3F]" suppressHydrationWarning>

@@ -11,8 +11,8 @@ type LogoProps = {
 };
 
 export function Logo({ width = 36, height = 36, className, alt = "LTA" }: LogoProps) {
-  const img = useWebsiteImages();
-  const src = img?.Logo ?? "/lta-logo.png";
+  const { getImageUrl } = useWebsiteImages();
+  const src = getImageUrl("", "lta-logo.png");
 
   return (
     <Image

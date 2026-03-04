@@ -4,35 +4,36 @@ import { useState, useMemo } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useWebsiteImages } from "@/hooks/useWebsiteImages";
-import type { WebsiteImages } from "@/lib/airtable-images";
 import { SectionReveal } from "./SectionReveal";
+
+const IMAGE_SECTION = "images";
 
 export type Officer = {
   name: string;
   title: string;
-  imageUrl?: string;
+  imageFile?: string;
   initials?: string;
   linkedInUrl?: string;
   isDirector?: boolean;
 };
 
-const execBoard: (Officer & { imageKey?: keyof import("@/lib/airtable-images").WebsiteImages })[] = [
-  { name: "Ayaan Ali", title: "President", imageKey: "OfficerAyaan", linkedInUrl: "https://www.linkedin.com/in/ayaanzali/" },
-  { name: "Ram Sundararaman", title: "Vice President", imageKey: "OfficerRam", linkedInUrl: "https://www.linkedin.com/in/sriramsundararaman" },
+const execBoard: Officer[] = [
+  { name: "Ayaan Ali", title: "President", imageFile: "Ayaan.JPG", linkedInUrl: "https://www.linkedin.com/in/ayaanzali/" },
+  { name: "Ram Sundararaman", title: "Vice President", imageFile: "Ram.JPG", linkedInUrl: "https://www.linkedin.com/in/sriramsundararaman" },
   { name: "Dorsa Zilaee", title: "Executive Director", initials: "DZ" },
-  { name: "Tanisha Dossa", title: "Secretary", imageKey: "OfficerTanisha", linkedInUrl: "https://www.linkedin.com/in/tanisha-dossa-87a80127a/" },
+  { name: "Tanisha Dossa", title: "Secretary", imageFile: "Tanisha.JPG", linkedInUrl: "https://www.linkedin.com/in/tanisha-dossa-87a80127a/" },
   { name: "Amrita Singh", title: "Treasurer", initials: "AS" },
 ];
 
-const directors: (Officer & { imageKey?: keyof import("@/lib/airtable-images").WebsiteImages })[] = [
-  { name: "Aishah Abdullah", title: "Programming Director", imageKey: "OfficerAishah", linkedInUrl: "https://www.linkedin.com/in/aishahabdulla/", isDirector: true },
-  { name: "Nethra Kartheeswaran", title: "Marketing Co-Director", imageKey: "OfficerNethra", linkedInUrl: "https://www.linkedin.com/in/nethrapk/", isDirector: true },
-  { name: "Aafiya Vahora", title: "Marketing Co-Director", imageKey: "OfficerAafiya", linkedInUrl: "https://www.linkedin.com/in/aafiyavahora/", isDirector: true },
+const directors: Officer[] = [
+  { name: "Aishah Abdullah", title: "Programming Director", initials: "AA", linkedInUrl: "https://www.linkedin.com/in/aishahabdulla/", isDirector: true },
+  { name: "Nethra Kartheeswaran", title: "Marketing Co-Director", imageFile: "Nethra.JPG", linkedInUrl: "https://www.linkedin.com/in/nethrapk/", isDirector: true },
+  { name: "Aafiya Vahora", title: "Marketing Co-Director", imageFile: "Aafiya.png", linkedInUrl: "https://www.linkedin.com/in/aafiyavahora/", isDirector: true },
   { name: "Aaryan Merchant", title: "Media Co-Director", initials: "AM", isDirector: true },
   { name: "Varad Kulkarni", title: "Media Co-Director", initials: "VK", isDirector: true },
-  { name: "Neha Kandi", title: "Events Director", imageKey: "OfficerNeha", isDirector: true },
+  { name: "Neha Kandi", title: "Events Director", imageFile: "Neha.JPG", isDirector: true },
   { name: "Mohamad Alsafi", title: "Fundraising Director", initials: "MA", isDirector: true },
-  { name: "Khadijah Khalid", title: "Outreach Director", imageKey: "OfficerKhadijah", isDirector: true },
+  { name: "Khadijah Khalid", title: "Outreach Director", imageFile: "Khadijah.JPG", isDirector: true },
   { name: "Aaradhya Arkatkar", title: "Growth Director", initials: "AA", isDirector: true },
 ];
 
@@ -44,24 +45,7 @@ function splitName(fullName: string): { first: string; last: string } {
   return { first, last };
 }
 
-const FALLBACK_OFFICER_IMAGES: Record<string, string> = {
-  OfficerAyaan: "/images/Ayaan.JPG",
-  OfficerRam: "/images/Ram.JPG",
-  OfficerTanisha: "/images/Tanisha.JPG",
-  OfficerAishah: "/images/Aishah.png",
-  OfficerNethra: "/images/Nethra.JPG",
-  OfficerAafiya: "/images/Aafiya.png",
-  OfficerNeha: "/images/Neha.JPG",
-  OfficerKhadijah: "/images/Khadijah.JPG",
-};
-
-function OfficerCard({
-  officer,
-  delay,
-}: {
-  officer: Officer & { imageKey?: keyof WebsiteImages };
-  delay: number;
-}) {
+function OfficerCard({ officer, delay }: { officer: Officer & { imageUrl?: string }; delay: number }) {
   const [imgError, setImgError] = useState(false);
   const Wrapper = officer.linkedInUrl ? motion.a : motion.div;
   const wrapperProps = officer.linkedInUrl
@@ -123,14 +107,14 @@ function OfficerCard({
 }
 
 export function Officers() {
-  const img = useWebsiteImages();
+  const { getImageUrl } = useWebsiteImages();
   const resolveOfficers = useMemo(() => {
-    const resolve = (o: (typeof execBoard)[0] | (typeof directors)[0]) => ({
+    const resolve = (o: Officer) => ({
       ...o,
-      imageUrl: o.imageKey ? ((img?.[o.imageKey] as string | undefined) ?? FALLBACK_OFFICER_IMAGES[o.imageKey]) : undefined,
+      imageUrl: o.imageFile ? getImageUrl(IMAGE_SECTION, o.imageFile) : undefined,
     });
     return { exec: execBoard.map(resolve), dirs: directors.map(resolve) };
-  }, [img]);
+  }, [getImageUrl]);
 
   return (
     <section id="officers" className="py-24 px-6 bg-[#F4F1EC]">
