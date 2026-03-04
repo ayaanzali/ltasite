@@ -5,6 +5,7 @@ export async function GET() {
   try {
     console.log("[api/images] Env check - AIRTABLE_API_KEY:", process.env.AIRTABLE_API_KEY ? `set (len=${process.env.AIRTABLE_API_KEY.length})` : "empty");
     const images = await fetchWebsiteImages();
+    console.log("[api/images] result:", JSON.stringify(images));
     return NextResponse.json(images, {
       headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600" },
     });
