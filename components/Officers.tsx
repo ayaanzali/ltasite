@@ -139,7 +139,7 @@ export function Officers() {
         <p className="text-sm font-medium text-gray-500 mb-6">Directors</p>
         <div className="flex flex-wrap justify-center gap-4 sm:gap-6 lg:gap-8">
           {resolveOfficers.dirs.map((officer, i) => (
-            <div key={officer.name} className="flex-[1_1_min(100%,280px)]">
+            <div key={officer.name} className="flex-[0_1_min(100%,280px)]">
               <OfficerCard officer={officer} delay={i * 0.04} />
             </div>
           ))}
