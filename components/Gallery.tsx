@@ -63,9 +63,19 @@ function WinnerCard({
 }
 
 export function Gallery() {
-  const { getImageUrl } = useWebsiteImages();
+  const { getImageUrl, images } = useWebsiteImages();
   const winningImage = getImageUrl(SECTION, WINNING_TEAM.file);
   const runnerUpImage = getImageUrl(SECTION, RUNNER_UP.file);
+
+  // Debug: log what getImageUrl returns for competition cards; if null, show Airtable cache keys
+  const url1 = getImageUrl("competition-photos", "1.PNG");
+  const url2 = getImageUrl("competition-photos", "2.PNG");
+  console.log('[Gallery] getImageUrl("competition-photos", "1.PNG") =>', url1);
+  console.log('[Gallery] getImageUrl("competition-photos", "2.PNG") =>', url2);
+  if (url1 === null || url2 === null) {
+    const keys = images ? Object.keys(images) : [];
+    console.log('[Gallery] Airtable cache keys (section/name):', keys.length ? keys : '(empty or null)');
+  }
 
   return (
     <section id="gallery" className="py-24 px-4 md:px-8 lg:px-12 xl:px-16 bg-[#1D2A3F]" suppressHydrationWarning>

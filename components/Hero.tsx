@@ -175,7 +175,8 @@ export function Hero() {
             THE LAW & TRIAL ASSOCIATION AT UTD
           </motion.p>
           <h1
-            className="font-playfair font-bold text-white tracking-tight leading-[1.1] mb-5 text-3xl sm:text-4xl md:text-[2.75rem] lg:text-[3.5rem] xl:text-[4rem] 2xl:text-[4.5rem]"
+            className="font-playfair font-bold text-white tracking-tight leading-[1.1] mb-5"
+            style={{ fontSize: "clamp(2rem, 4vw, 4.5rem)" }}
           >
             {words.map((word, i) => (
               <motion.span

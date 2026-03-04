@@ -82,25 +82,21 @@ export function GetInvolved() {
 
       <AmbassadorSection />
 
-      {/* Top row — contained, uniform height, no stretch on ultrawide */}
-      <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 xl:px-16">
-        <div className="grid grid-cols-2 gap-0 w-full h-[220px] sm:h-[320px] md:h-[420px] lg:h-[500px]">
-          {topRow.map(({ src, objectPosition }, i) => (
-            <div key={i} className="relative w-full h-full">
-              <PhotoTile src={src} objectPosition={objectPosition} />
-            </div>
-          ))}
-        </div>
+      {/* Top row */}
+      <div className="grid grid-cols-2 gap-0 w-full h-[220px] sm:h-[320px] md:h-[420px] lg:h-[500px]">
+        {topRow.map(({ src, objectPosition }, i) => (
+          <div key={i} className="relative w-full h-full">
+            <PhotoTile src={src} objectPosition={objectPosition} />
+          </div>
+        ))}
       </div>
-      {/* Bottom row — contained, uniform aspect */}
-      <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 xl:px-16">
-        <div className="grid grid-cols-3 gap-0 w-full max-w-5xl mx-auto">
-          {bottomRow.map(({ src, objectPosition }, i) => (
-            <div key={i} className="relative aspect-[3/4] w-full overflow-hidden">
-              <PhotoTile src={src} objectPosition={objectPosition} />
-            </div>
-          ))}
-        </div>
+      {/* Bottom row */}
+      <div className="grid grid-cols-3 gap-0 w-full">
+        {bottomRow.map(({ src, objectPosition }, i) => (
+          <div key={i} className="relative aspect-[3/4] w-full overflow-hidden">
+            <PhotoTile src={src} objectPosition={objectPosition} />
+          </div>
+        ))}
       </div>
     </section>
   );
