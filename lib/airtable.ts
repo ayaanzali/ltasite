@@ -127,7 +127,6 @@ export type MemberRecord = {
   major: string;
   gradYear: string;
   linkedinUrl: string;
-  passwordHash: string;
   approved: boolean;
   /** Raw value from Airtable for debugging */
   rawApproved: unknown;
@@ -163,7 +162,6 @@ function recordToMember(r: AirtableRecord): MemberRecord {
     major: (r.get("Major") as string) ?? "",
     gradYear: (r.get("Grad Year") as string) ?? "",
     linkedinUrl: (r.get("LinkedIn URL") as string) ?? "",
-    passwordHash: (r.get("Password") as string) ?? "",
     approved: isApprovedValue(rawApproved),
     rawApproved,
   };

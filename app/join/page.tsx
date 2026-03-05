@@ -6,7 +6,7 @@ import { Check } from "lucide-react";
 
 const YEAR_OPTIONS = ["Freshman", "Sophomore", "Junior", "Senior", "Graduate"];
 const PURSUING_OPTIONS = ["Pre Law", "Law School Applicant", "Just Exploring", "Other"];
-const HOW_HEAR_OPTIONS = ["Instagram", "Friend", "Class", "Class visit", "Tabling", "UTD Website", "Other"];
+const HOW_HEAR_OPTIONS = ["Instagram", "Friend", "Class visit", "Tabling", "UTD Website", "Other"];
 
 export default function JoinPage() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
