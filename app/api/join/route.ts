@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import bcrypt from "bcryptjs";
 import { createRecord } from "@/lib/airtable";
 
 export async function POST(request: Request) {
@@ -39,8 +38,6 @@ export async function POST(request: Request) {
       );
     }
 
-    const passwordHash = await bcrypt.hash(email, 10);
-
     const fields: Record<string, unknown> = {
       "First Name": firstName,
       "Last Name": lastName,
@@ -54,7 +51,6 @@ export async function POST(request: Request) {
       "Referral Source": howDidYouHear || "",
       "LinkedIn URL": linkedinUrl || "",
       Approved: false,
-      Password: passwordHash,
     };
 
     let result: { id?: string; error?: string; rawError?: unknown };
