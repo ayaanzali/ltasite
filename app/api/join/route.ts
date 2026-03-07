@@ -83,14 +83,17 @@ export async function POST(request: Request) {
         subject: "Welcome to LTA UTD — Next Steps",
         html: `
           <p>Hi ${firstName},</p>
-          <p>Thanks for filling out the join form! We're excited to have you interested in the Law and Trial Association at UTD.</p>
-          <p>Here's what to expect next:</p>
+          <p>Thanks for filling out the join form! To complete your membership, pay <strong>$10/year in dues</strong> via Venmo <strong>@LTA-UTD</strong> or Zelle <strong>lta.utd@gmail.com</strong>. An officer will then approve your request and you'll receive access to the member portal.</p>
+          <p>As a member, you can expect:</p>
           <ul>
-            <li>Pay <strong>$10/year in dues</strong> via Venmo <strong>@LTA-UTD</strong> or Zelle <strong>lta.utd@gmail.com</strong>.</li>
-            <li>An officer will approve your membership request and you'll be able to log into our website, connect with LTA members, and access everything in the member portal.</li>
-            <li>We'll email you more about what's upcoming for our members this semester!</li>
+            <li>1-on-1 access to lawyers after every panel</li>
+            <li>Eligibility to compete in the Spring Case Competition ($1K prize)</li>
+            <li>Apply for Intramural Mock Trial in December (members only)</li>
+            <li>Member-only events including Alumni Roundtable</li>
+            <li>Direct networking with attorneys, UTD alumni, and law school connections</li>
+            <li>First access to LTA opportunities, partnerships, and perks as we grow</li>
           </ul>
-          <p>If you have any questions, feel free to reach out at <a href="mailto:lta.utd@gmail.com">lta.utd@gmail.com</a>.</p>
+          <p>Questions? Reach out at <a href="mailto:lta.utd@gmail.com">lta.utd@gmail.com</a>.</p>
           <p>— LTA UTD</p>
         `,
       });
