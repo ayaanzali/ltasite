@@ -110,7 +110,7 @@ export default function JoinPage() {
               <Check className="w-8 h-8 text-[#1D2A3F]" strokeWidth={2} />
             </div>
             <h2 className="font-serif text-2xl font-bold mb-2">Welcome to LTA!</h2>
-            <p className="text-[#1D2A3F]/90 mb-6">Check your email for next steps. If you don't see it, check your spam or junk folder.</p>
+            <p className="text-[#1D2A3F]/90 mb-6">Check your email for next steps. If you do not see it, check your spam or junk folder.</p>
             <Link
               href="/"
               className="text-[#1D2A3F] font-medium underline hover:no-underline hover:text-[#2D5BE3]"
