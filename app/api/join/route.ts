@@ -86,15 +86,11 @@ export async function POST(request: Request) {
           <p>Thanks for filling out the join form! We're excited to have you interested in the Law and Trial Association at UTD.</p>
           <p>Here's what to expect next:</p>
           <ul>
-            <li>An officer will review your application and you'll typically be approved within <strong>24 hours</strong>.</li>
-            <li>Once approved, you'll receive a confirmation and can access the member portal at <a href="https://ltautd.com">ltautd.com</a>.</li>
+            <li>Pay <strong>$10/year in dues</strong> via Venmo <strong>@LTA-UTD</strong> or Zelle <strong>lta.utd@gmail.com</strong>.</li>
+            <li>An officer will approve your membership request and you'll be able to log into our website, connect with LTA members, and access everything in the member portal.</li>
+            <li>We'll email you more about what's upcoming for our members this semester!</li>
           </ul>
-          <p><strong>Dues are $10</strong> and can be paid via:</p>
-          <ul>
-            <li><strong>Venmo:</strong> @LTA-UTD</li>
-            <li><strong>Zelle:</strong> lta.utd@gmail.com</li>
-          </ul>
-          <p>If you have any questions in the meantime, feel free to reach out at <a href="mailto:lta.utd@gmail.com">lta.utd@gmail.com</a>.</p>
+          <p>If you have any questions, feel free to reach out at <a href="mailto:lta.utd@gmail.com">lta.utd@gmail.com</a>.</p>
           <p>— LTA UTD</p>
         `,
       });
