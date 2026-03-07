@@ -2,11 +2,11 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { getPendingApprovalMembers, updateRecord } from "@/lib/airtable";
 
-const RESEND_API_KEY = process.env.RESEND_API_KEY ?? "";
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "LTA UTD <onboarding@resend.dev>";
-const CRON_SECRET = process.env.CRON_SECRET ?? "";
-
 export async function GET(request: Request) {
+  const RESEND_API_KEY = process.env.RESEND_API_KEY ?? "";
+  const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "LTA UTD <onboarding@resend.dev>";
+  const CRON_SECRET = process.env.CRON_SECRET ?? "";
+
   // Vercel cron jobs call GET and pass Authorization: Bearer <CRON_SECRET>
   if (CRON_SECRET) {
     const auth = request.headers.get("authorization") ?? "";

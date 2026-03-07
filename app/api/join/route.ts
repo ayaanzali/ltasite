@@ -2,9 +2,6 @@ import { NextResponse } from "next/server";
 import { createRecord } from "@/lib/airtable";
 import { Resend } from "resend";
 
-const RESEND_API_KEY = process.env.RESEND_API_KEY ?? "";
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "LTA UTD <onboarding@resend.dev>";
-
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -73,7 +70,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: result.error }, { status: 500 });
     }
 
+    const RESEND_API_KEY = process.env.RESEND_API_KEY ?? "";
+    const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "LTA UTD <onboarding@resend.dev>";
+    console.log("[join] email debug — key set:", !!RESEND_API_KEY, "| from:", FROM_EMAIL, "| to:", email);
+
     if (RESEND_API_KEY && email) {
+      console.log("[join] attempting Resend send...");
       const resend = new Resend(RESEND_API_KEY);
       const { error: emailError } = await resend.emails.send({
         from: FROM_EMAIL,
@@ -97,7 +99,9 @@ export async function POST(request: Request) {
         `,
       });
       if (emailError) {
-        console.error("[join] Resend error:", emailError);
+        console.error("[join] Resend error:", JSON.stringify(emailError));
+      } else {
+        console.log("[join] Resend send succeeded");
       }
     }
 
