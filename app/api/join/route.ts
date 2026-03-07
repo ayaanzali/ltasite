@@ -79,6 +79,7 @@ export async function POST(request: Request) {
       const resend = new Resend(RESEND_API_KEY);
       const { error: emailError } = await resend.emails.send({
         from: FROM_EMAIL,
+        reply_to: "lta.utd@gmail.com",
         to: email,
         subject: "Welcome to LTA UTD — Next Steps",
         html: `
