@@ -81,7 +81,7 @@ export async function POST(request: Request) {
         from: FROM_EMAIL,
         replyTo: "lta.utd@gmail.com",
         to: email,
-        subject: "Welcome to LTA UTD — Next Steps",
+        subject: "Welcome to LTA UTD: Next Steps",
         html: `
           <p>Hi ${firstName},</p>
           <p>Thanks for filling out the join form! To complete your membership, pay <strong>$10/year in dues</strong> via Venmo <strong>@LTA-UTD</strong> or Zelle <strong>lta.utd@gmail.com</strong>. An officer will then approve your request and you'll receive access to the member portal.</p>

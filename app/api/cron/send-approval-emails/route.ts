@@ -40,7 +40,7 @@ export async function GET(request: Request) {
       const { error: emailError } = await resend.emails.send({
         from: FROM_EMAIL,
         to: member.email,
-        subject: "You're approved — Welcome to LTA UTD!",
+        subject: "You're approved! Welcome to LTA UTD",
         html: `
           <p>Hi ${member.firstName},</p>
           <p>Great news — you've been approved as a member of the Law and Trial Association at UTD!</p>
