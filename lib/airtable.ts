@@ -232,6 +232,46 @@ export async function updateMemberClerkUserId(
   }
 }
 
+export type PendingApprovalMember = {
+  id: string;
+  firstName: string;
+  email: string;
+};
+
+export async function getPendingApprovalMembers(): Promise<PendingApprovalMember[]> {
+  const base = getBase();
+  if (!base) return [];
+  const table = base(MEMBERS_TABLE) as {
+    select: (opts: { filterByFormula: string }) => {
+      eachPage: (
+        page: (records: AirtableRecord[], fetchNextPage: () => void) => void,
+        done: (err?: Error) => void
+      ) => void;
+    };
+  };
+  return new Promise((resolve, reject) => {
+    const all: AirtableRecord[] = [];
+    table
+      .select({ filterByFormula: "AND({Approved} = 1, NOT({Approval Email Sent}))" })
+      .eachPage(
+        (pageRecords, fetchNextPage) => {
+          all.push(...pageRecords);
+          fetchNextPage();
+        },
+        (err) => {
+          if (err) { reject(err); return; }
+          resolve(
+            all.map((r) => ({
+              id: r.id,
+              firstName: (r.get("First Name") as string) ?? "",
+              email: (r.get("Email") as string) ?? "",
+            }))
+          );
+        }
+      );
+  });
+}
+
 export async function getApprovedMembers(): Promise<ApprovedMember[]> {
   const base = getBase();
   if (!base) return [];
