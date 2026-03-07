@@ -87,12 +87,12 @@ export async function POST(request: Request) {
           <p>As a member, you can expect:</p>
           <ul>
             <li>1-on-1 access to lawyers after every panel</li>
-            <li>Eligibility to compete in the Spring Case Competition ($1K prize)</li>
-            <li>Apply for Intramural Mock Trial in December (members only)</li>
             <li>Member-only events including Alumni Roundtable</li>
+            <li>Apply for Intramural Mock Trial in December (members only)</li>
             <li>Direct networking with attorneys, UTD alumni, and law school connections</li>
-            <li>First access to LTA opportunities, partnerships, and perks as we grow</li>
+            <li>First access to LTA opportunities, partnerships, and perks as we grow — with more added every semester</li>
           </ul>
+          <p>Your $10 dues cover you for the full year from the date you join.</p>
           <p>Questions? Reach out at <a href="mailto:lta.utd@gmail.com">lta.utd@gmail.com</a>.</p>
           <p>— LTA UTD</p>
         `,
