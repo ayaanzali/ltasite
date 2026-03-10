@@ -88,13 +88,6 @@ export function Footer() {
               >
                 lta.utd@gmail.com
               </a>
-              <button
-                type="button"
-                onClick={() => window.dispatchEvent(new CustomEvent("open-lta-chat"))}
-                className="inline-flex items-center justify-center w-fit mt-2 px-4 py-2.5 rounded-lg bg-[#1D2A3F] text-[#F4F1EC] text-sm font-semibold hover:bg-[#2D5BE3] transition-colors"
-              >
-                Ask LTA
-              </button>
             </div>
           </div>
         </div>

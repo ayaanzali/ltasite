@@ -3,7 +3,6 @@ import { Playfair_Display, Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
-import { ChatWidget } from "@/components/ChatWidget";
 import { WebsiteImagesProvider } from "@/hooks/useWebsiteImages";
 import { DebateNightModal } from "@/components/DebateNightModal";
 
@@ -42,8 +41,7 @@ export default function RootLayout({
           <WebsiteImagesProvider>
             <Navbar />
             {children}
-            <ChatWidget />
-            <DebateNightModal />
+<DebateNightModal />
           </WebsiteImagesProvider>
         </ClerkProvider>
       </body>

@@ -58,10 +58,10 @@ export function About() {
                 Developing Legal Minds at UT Dallas
               </h2>
               <p className="text-gray-600 max-w-3xl text-lg mb-4">
-                Founded in 2025, the Law & Trial Association at UT Dallas is where students get their first real taste of the legal world. We don't just talk about law, we practice it. From day one, you're on your feet, building arguments, and figuring out how to think like a lawyer.
+                Founded in 2025, the Law &amp; Trial Association at UT Dallas is where students get their first real taste of the legal world. We don&apos;t just talk about law, we practice it. From day one, you&apos;re on your feet, building arguments, and figuring out how to think like a lawyer.
               </p>
               <p className="text-gray-600 max-w-3xl text-lg mb-4">
-                We run UTD's first ever Intramural Mock Trial Competition, where college students go up as attorneys against each other with high school students serving as witnesses. We also host lawyer panels, LSAT prep workshops, and networking events so you're not just learning about law school, you're actually getting ready for it.
+                We run UTD&apos;s first ever Intramural Mock Trial Competition, where college students go up as attorneys against each other with high school students serving as witnesses. We also host lawyer panels, LSAT prep workshops, and networking events so you&apos;re not just learning about law school, you&apos;re actually getting ready for it.
               </p>
               <p className="text-gray-600 max-w-3xl text-lg mb-8">
                 Pre law, undecided, or just want to get better at speaking and thinking on your feet, LTA has a place for you.
