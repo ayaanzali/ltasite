@@ -119,6 +119,64 @@ export async function fetchEventsFromBase(): Promise<EventRecord[]> {
   }
 }
 
+export type OfficerRecord = {
+  id: string;
+  name: string;
+  position: string;
+  linkedInUrl?: string;
+  picUrl?: string;
+  isExecBoard: boolean;
+};
+
+export async function fetchOfficersFromBase(): Promise<OfficerRecord[]> {
+  const base = getBase();
+  if (!base) return [];
+  try {
+    const table = base("Officers") as {
+      select: (opts?: { sort?: { field: string; direction: string }[] }) => {
+        eachPage: (
+          page: (records: AirtableRecord[], fetchNextPage: () => void) => void,
+          done: (err?: Error) => void
+        ) => void;
+      };
+    };
+    const all: AirtableRecord[] = [];
+    return new Promise((resolve, reject) => {
+      table.select().eachPage(
+        (pageRecords, fetchNextPage) => {
+          all.push(...pageRecords);
+          fetchNextPage();
+        },
+        (err) => {
+          if (err) { reject(err); return; }
+          resolve(
+            all
+              .filter((r) => {
+                const name = (r.get("Full Name") as string) ?? "";
+                return name.trim() && name.trim().toUpperCase() !== "TBD";
+              })
+              .map((r) => {
+                const pic = r.get("Pic On Website") as Array<{ url?: string }> | undefined;
+                const teamRaw = r.get("Team");
+                const teamArr: string[] = Array.isArray(teamRaw) ? teamRaw as string[] : [];
+                return {
+                  id: r.id,
+                  name: (r.get("Full Name") as string) ?? "",
+                  position: (r.get("Position") as string) ?? "",
+                  linkedInUrl: (r.get("LinkedIn URL") as string) || undefined,
+                  picUrl: pic?.[0]?.url || undefined,
+                  isExecBoard: teamArr.includes("Executive Board"),
+                };
+              })
+          );
+        }
+      );
+    });
+  } catch {
+    return [];
+  }
+}
+
 export type MemberRecord = {
   id: string;
   firstName: string;
