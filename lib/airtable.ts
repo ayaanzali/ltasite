@@ -157,15 +157,14 @@ export async function fetchOfficersFromBase(): Promise<OfficerRecord[]> {
               })
               .map((r) => {
                 const pic = r.get("Pic On Website") as Array<{ url?: string }> | undefined;
-                const teamRaw = r.get("Team");
-                const teamArr: string[] = Array.isArray(teamRaw) ? teamRaw as string[] : [];
+                const officerType = (r.get("Officer Type") as string) ?? "";
                 return {
                   id: r.id,
                   name: (r.get("Full Name") as string) ?? "",
                   position: (r.get("Position") as string) ?? "",
                   linkedInUrl: (r.get("LinkedIn URL") as string) || undefined,
                   picUrl: pic?.[0]?.url || undefined,
-                  isExecBoard: teamArr.includes("Executive Board"),
+                  isExecBoard: officerType === "Executive Board",
                 };
               })
           );
