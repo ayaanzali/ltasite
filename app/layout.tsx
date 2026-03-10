@@ -5,6 +5,7 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { ChatWidget } from "@/components/ChatWidget";
 import { WebsiteImagesProvider } from "@/hooks/useWebsiteImages";
+import { DebateNightModal } from "@/components/DebateNightModal";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -42,6 +43,7 @@ export default function RootLayout({
             <Navbar />
             {children}
             <ChatWidget />
+            <DebateNightModal />
           </WebsiteImagesProvider>
         </ClerkProvider>
       </body>
