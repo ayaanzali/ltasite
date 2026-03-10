@@ -103,8 +103,20 @@ export function Officers() {
       .finally(() => setLoading(false));
   }, []);
 
-  const exec = officers.filter((o) => o.isExecBoard);
-  const dirs = officers.filter((o) => !o.isExecBoard);
+  const execOrder = ["Ayaan Ali", "Ram Sundararaman", "Tanisha Dossa", "Amrita Singh", "Dorsa Zilaee"];
+  const dirOrder = ["Nethra Kartheeswaran", "Aafiya Vahora", "Aaryan Merchant", "Varad Kulkarni"];
+
+  const exec = [...officers.filter((o) => o.isExecBoard)].sort((a, b) => {
+    const ai = execOrder.indexOf(a.name);
+    const bi = execOrder.indexOf(b.name);
+    return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+  });
+
+  const dirs = [...officers.filter((o) => !o.isExecBoard)].sort((a, b) => {
+    const ai = dirOrder.indexOf(a.name);
+    const bi = dirOrder.indexOf(b.name);
+    return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+  });
 
   return (
     <section id="officers" className="py-24 px-4 md:px-8 lg:px-12 xl:px-16 bg-[#F4F1EC]">
