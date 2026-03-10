@@ -5,6 +5,7 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { WebsiteImagesProvider } from "@/hooks/useWebsiteImages";
 import { DebateNightModal } from "@/components/DebateNightModal";
+import { PostHogProvider } from "@/components/PostHogProvider";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -37,6 +38,7 @@ export default function RootLayout({
       className={`${playfair.variable} ${inter.variable}`}
     >
       <body className="min-h-screen">
+        <PostHogProvider>
         <ClerkProvider>
           <WebsiteImagesProvider>
             <Navbar />
@@ -44,6 +46,7 @@ export default function RootLayout({
 <DebateNightModal />
           </WebsiteImagesProvider>
         </ClerkProvider>
+        </PostHogProvider>
       </body>
     </html>
   );
