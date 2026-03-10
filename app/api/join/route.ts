@@ -84,18 +84,25 @@ export async function POST(request: Request) {
         subject: "Welcome to LTA UTD: Next Steps",
         html: `
           <p>Hi ${firstName},</p>
-          <p>Thanks for filling out the join form! To complete your membership, pay $10/year in dues via Venmo <strong>@LTA-UTD</strong> or Zelle <strong>lta.utd@gmail.com</strong>. An officer will then approve your request and you'll receive access to the member portal.</p>
-          <p>As a member, you can expect:</p>
+          <p>I am excited to welcome you to The Law &amp; Trial Association at UTD! As we hope to establish ourselves as a new organization at UTD, we are formalizing our membership process with the goal of bringing special benefits to LTA members. This year, LTA will host events like:</p>
           <ul>
-            <li>1-on-1 access to lawyers after every panel</li>
-            <li>Member-only events including Alumni Roundtable</li>
-            <li>Apply for Intramural Mock Trial in December (members only)</li>
-            <li>Direct networking with attorneys, UTD alumni, and law school connections</li>
-            <li>First access to LTA opportunities, partnerships, and perks as we grow — with more added every semester</li>
+            <li>Lawyer Panels</li>
+            <li>Alumni Networking (members only)</li>
+            <li>Debate &amp; Social Nights</li>
+            <li>LSAT 101 (members only)</li>
+            <li>Case Competitions (members only)</li>
           </ul>
-          <p>Your $10 dues cover you for the full year from the date you join.</p>
-          <p>Questions? Reach out at <a href="mailto:lta.utd@gmail.com">lta.utd@gmail.com</a>.</p>
-          <p>— LTA UTD</p>
+          <p>We want our members to be able to participate in our most important events and be able to network with the speakers we bring to our events. We also want them to be able to participate in our competitions such as Intramural Mock Trial in the fall and another competition we hope to launch this semester. To provide these benefits, we are formally opening LTA membership to all UTD students.</p>
+          <p>The only requirement is to:</p>
+          <ol>
+            <li>Complete the membership form, which you have already done, to receive this email.</li>
+            <li>Pay $10 dues by Venmo to <strong>@lta-utd</strong> or Zelle to <strong>ltautd@gmail.com</strong></li>
+          </ol>
+          <p>Your dues cover membership for the full calendar year. You will be eligible to attend member-only events and apply for our competitions through December. If you already paid LTA dues or signed up for the Intramural Mock Trial last semester, do not pay again. Instead, email <a href="mailto:ltautd@gmail.com">ltautd@gmail.com</a>, and we will process your membership manually.</p>
+          <p>After you pay your dues, an officer will review your membership. You will then receive an email granting access to your member portal. There, you can access the member directory and connect with other LTA members.</p>
+          <p>You will receive emails when LTA opens RSVPs for events. You will also have the chance to network with speakers at our events. In addition, we will host member-only networking workshops that you can attend.</p>
+          <p>If you have any questions about membership or dues, please feel free to contact us at <a href="mailto:ltautd@gmail.com">ltautd@gmail.com</a>. We look forward to having you join The Law &amp; Trial Association at UTD!</p>
+          <p>Best,<br>Ayaan Ali<br>LTA President</p>
         `,
       });
       if (emailError) {
