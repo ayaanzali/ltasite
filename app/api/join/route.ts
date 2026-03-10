@@ -79,12 +79,12 @@ export async function POST(request: Request) {
       const resend = new Resend(RESEND_API_KEY);
       const { error: emailError } = await resend.emails.send({
         from: FROM_EMAIL,
-        replyTo: "lta.utd@gmail.com",
+        replyTo: "ltautd@gmail.com",
         to: email,
         subject: "Welcome to LTA UTD: Next Steps",
         html: `
           <p>Hi ${firstName},</p>
-          <p>Thanks for filling out the join form! To complete your membership, pay <strong>$10/year in dues</strong> via Venmo <strong>@LTA-UTD</strong> or Zelle <strong>lta.utd@gmail.com</strong>. An officer will then approve your request and you'll receive access to the member portal.</p>
+          <p>Thanks for filling out the join form! To complete your membership, pay $10/year in dues via Venmo <strong>@LTA-UTD</strong> or Zelle <strong>lta.utd@gmail.com</strong>. An officer will then approve your request and you'll receive access to the member portal.</p>
           <p>As a member, you can expect:</p>
           <ul>
             <li>1-on-1 access to lawyers after every panel</li>
